@@ -1,0 +1,3623 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nazwa Hemalia Putri — Data Analyst & IT Enthusiast</title>
+    <meta name="description"
+        content="Portfolio of Nazwa Hemalia Putri — Informatics Engineering graduate, Data Analyst, and Software Developer specializing in data-driven solutions." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link href="assets/img/icon.png" rel="icon">
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        /* =========================================
+           1. CSS RESET & THEME VARIABLES
+           ========================================= */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Shared */
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-glow: 0 0 30px rgba(0, 212, 255, 0.15);
+        }
+
+        /* ---- DARK THEME ---- */
+        [data-theme="dark"] {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-card-hover: rgba(17, 24, 39, 0.9);
+            --bg-glass: rgba(255, 255, 255, 0.04);
+            --bg-glass-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent: #00d4ff;
+            --accent-rgb: 0, 212, 255;
+            --accent-secondary: #7c3aed;
+            --accent-secondary-rgb: 124, 58, 237;
+            --gradient-accent: linear-gradient(135deg, #00d4ff, #7c3aed);
+            --gradient-card: linear-gradient(145deg, rgba(17, 24, 39, 0.8), rgba(30, 41, 59, 0.4));
+            --header-bg: rgba(10, 14, 26, 0.85);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --input-bg: rgba(15, 23, 42, 0.8);
+            --badge-bg: rgba(0, 212, 255, 0.1);
+            --timeline-dot-bg: #0a0e1a;
+            --map-filter: invert(90%) hue-rotate(180deg) brightness(90%) contrast(90%);
+            --img-shadow: 0 0 40px rgba(0, 212, 255, 0.3);
+            --logo-glow: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+        }
+
+        /* ---- LIGHT THEME ---- */
+        [data-theme="light"] {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --bg-card: rgba(255, 255, 255, 0.75);
+            --bg-card-hover: rgba(255, 255, 255, 0.95);
+            --bg-glass: rgba(255, 255, 255, 0.6);
+            --bg-glass-border: rgba(0, 0, 0, 0.08);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --accent: #0ea5e9;
+            --accent-rgb: 14, 165, 233;
+            --accent-secondary: #7c3aed;
+            --accent-secondary-rgb: 124, 58, 237;
+            --gradient-accent: linear-gradient(135deg, #0ea5e9, #7c3aed);
+            --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(241, 245, 249, 0.5));
+            --header-bg: rgba(248, 250, 252, 0.85);
+            --border-color: rgba(0, 0, 0, 0.06);
+            --input-bg: rgba(241, 245, 249, 0.9);
+            --badge-bg: rgba(14, 165, 233, 0.1);
+            --timeline-dot-bg: #f8fafc;
+            --map-filter: none;
+            --img-shadow: 0 0 40px rgba(14, 165, 233, 0.2);
+            --logo-glow: drop-shadow(0 0 8px rgba(14, 165, 233, 0.3));
+        }
+
+        /* =========================================
+           2. BASE STYLES
+           ========================================= */
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color var(--transition), color var(--transition);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* 3D Canvas Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* =========================================
+           3. HEADER & NAVIGATION
+           ========================================= */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 16px 6%;
+            background: var(--header-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            filter: var(--logo-glow);
+            transition: var(--transition);
+        }
+
+        .logo span {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        #nav-menu li a {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.88rem;
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        #nav-menu li a:hover,
+        #nav-menu li a.active {
+            color: var(--accent);
+            background: var(--badge-bg);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: var(--transition);
+            margin-left: 12px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--badge-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: rotate(30deg);
+        }
+
+        [data-theme="dark"] .theme-toggle .bx-sun {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-toggle .bx-moon {
+            display: flex;
+        }
+
+        [data-theme="light"] .theme-toggle .bx-sun {
+            display: flex;
+        }
+
+        [data-theme="light"] .theme-toggle .bx-moon {
+            display: none;
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 14px;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-color);
+            background: var(--bg-glass);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: 8px;
+            user-select: none;
+            font-family: var(--font-mono);
+            backdrop-filter: blur(10px);
+        }
+
+        .lang-toggle:hover {
+            border-color: var(--accent);
+            background: var(--badge-bg);
+        }
+
+        .lang-toggle .lang-opt {
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .lang-toggle .lang-opt.active {
+            color: var(--accent);
+        }
+
+        .lang-toggle .lang-div {
+            color: var(--border-color);
+            font-size: 0.75rem;
+            opacity: 0.5;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            color: var(--text-primary);
+            cursor: pointer;
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-glass);
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        /* =========================================
+           4. SECTIONS LAYOUT
+           ========================================= */
+        section {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            padding: 100px 6% 60px;
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 span {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Alternating subtle backgrounds for sections */
+        section:nth-child(even) {
+            background: linear-gradient(180deg, transparent, rgba(var(--accent-rgb), 0.02), transparent);
+        }
+
+        /* =========================================
+           5. HOME / HERO SECTION
+           ========================================= */
+        #home {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            padding-top: 90px;
+            padding-bottom: 40px;
+        }
+
+        .home-content {
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeSlideUp 0.9s ease-out 0.3s forwards;
+        }
+
+        .home-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            background: var(--badge-bg);
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-family: var(--font-mono);
+        }
+
+        .home-tag .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+
+        .home-content h1 {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+        }
+
+        .home-content h1 .name-accent {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .home-roles {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+        }
+
+        .role-prefix {
+            color: var(--text-muted);
+        }
+
+        .typed-role {
+            color: var(--accent);
+            font-weight: 600;
+            min-width: 200px;
+        }
+
+        .typed-role::after {
+            content: '|';
+            display: inline;
+            animation: blink-cursor 1s step-end infinite;
+            color: var(--accent);
+            margin-left: 2px;
+        }
+
+        @keyframes blink-cursor {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .home-content p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 22px;
+            max-width: 520px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 24px;
+            background: var(--gradient-accent);
+            border-radius: var(--radius-xl);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(var(--accent-rgb), 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(var(--accent-rgb), 0.4);
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 24px;
+            background: transparent;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-3px);
+            background: var(--badge-bg);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-icons a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .social-icons a img {
+            width: 20px;
+            filter: invert(1);
+            transition: var(--transition);
+        }
+
+        [data-theme="light"] .social-icons a img {
+            filter: invert(0);
+        }
+
+        .social-icons a:hover {
+            border-color: var(--accent);
+            background: var(--badge-bg);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(var(--accent-rgb), 0.2);
+        }
+
+        /* Hero Image */
+        .hero-img-wrapper {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            flex-shrink: 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeSlideUp 0.9s ease-out 0.5s forwards;
+        }
+
+        .hero-img-ring {
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            background: var(--gradient-accent);
+            opacity: 0.25;
+            animation: ring-pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes ring-pulse {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.35;
+                transform: scale(1.03);
+            }
+        }
+
+        .hero-img-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid rgba(var(--accent-rgb), 0.3);
+            box-shadow: var(--img-shadow);
+            z-index: 1;
+        }
+
+        .hero-img-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 25%;
+        }
+
+        /* Floating data badges around hero image */
+        .hero-float-badge {
+            position: absolute;
+            padding: 8px 16px;
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 2;
+            animation: float-badge 6s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        .hero-float-badge i {
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        .hero-float-badge:nth-child(3) {
+            top: 6%;
+            left: -15%;
+            animation-delay: 0s;
+        }
+
+        .hero-float-badge:nth-child(4) {
+            bottom: 22%;
+            right: -5%;
+            animation-delay: 2s;
+        }
+
+        .hero-float-badge:nth-child(5) {
+            bottom: 2%;
+            left: -10%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float-badge {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================
+           6. ABOUT SECTION
+           ========================================= */
+        .about-container {
+            display: flex;
+            gap: 60px;
+            align-items: flex-start;
+        }
+
+        .about-left {
+            flex: 0 0 300px;
+            text-align: center;
+        }
+
+        .about-img-card {
+            width: 100%;
+            height: 380px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--img-shadow);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .about-img-card:hover {
+            transform: scale(1.02);
+        }
+
+        .about-img-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .about-img-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .about-left h3 {
+            margin-top: 12px;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .role-text {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 20px;
+            font-family: var(--font-mono);
+        }
+
+        .btn-cv {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border: 1.5px solid var(--accent);
+            border-radius: var(--radius-xl);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .btn-cv:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(var(--accent-rgb), 0.3);
+        }
+
+        .about-right {
+            flex: 1;
+        }
+
+        .about-desc p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 24px;
+            text-align: justify;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .info-item i {
+            color: var(--accent);
+            font-size: 18px;
+        }
+
+        /* Passion Box */
+        .passion-box {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            padding: 24px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent);
+            margin-bottom: 36px;
+            transition: var(--transition);
+        }
+
+        .passion-item {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .passion-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .passion-item i {
+            color: var(--accent);
+            font-size: 22px;
+            margin-top: 2px;
+        }
+
+        .passion-item h4 {
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .passion-item p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Skills Grid */
+        .about-right h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .about-right h3 span {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+            gap: 14px;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            padding: 16px 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(var(--accent-rgb), 0.15);
+        }
+
+        .skill-card i {
+            font-size: 30px;
+            color: var(--accent);
+            margin-bottom: 6px;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .skill-card:hover i {
+            transform: scale(1.2);
+        }
+
+        .skill-card span {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* =========================================
+           6.1 ABOUT ACHIEVEMENTS & PUBLICATIONS
+           ========================================= */
+        .about-achievements {
+            margin-top: 28px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .achievement-group-label {
+            margin-top: 14px;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .achievement-group-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+            opacity: 0.6;
+        }
+
+        .achievement-item {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            transition: var(--transition);
+        }
+
+        .achievement-item:hover {
+            border-color: rgba(var(--accent-rgb), 0.4);
+            transform: translateX(6px);
+            box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.1);
+        }
+
+        .achievement-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .achievement-icon.medal-silver {
+            background: rgba(200, 205, 215, 0.15);
+            color: #e2e8f0;
+            border: 1px solid rgba(226, 232, 240, 0.3);
+            box-shadow: 0 0 15px rgba(226, 232, 240, 0.15);
+        }
+
+        .achievement-icon.pub-icon {
+            background: rgba(var(--accent-rgb), 0.15);
+            color: var(--accent);
+            border: 1px solid rgba(var(--accent-rgb), 0.3);
+        }
+
+        .achievement-icon.thesis-icon {
+            background: rgba(168, 85, 247, 0.15);
+            color: #a855f7;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .achievement-content {
+            flex-grow: 1;
+        }
+
+        .achievement-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .achievement-header strong {
+            font-size: 0.98rem;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .achievement-year {
+            font-size: 0.78rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            background: rgba(var(--accent-rgb), 0.1);
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+        }
+
+        .achievement-event {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 3px;
+        }
+
+        .achievement-collab {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            font-style: italic;
+        }
+
+        .achievement-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .achievement-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(var(--accent-rgb), 0.08);
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            transition: var(--transition);
+        }
+
+        .achievement-link:hover {
+            background: var(--accent);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(var(--accent-rgb), 0.3);
+        }
+
+        /* =========================================
+           7. EXPERIENCE SECTION (CARDS)
+           ========================================= */
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .exp-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .exp-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--gradient-accent);
+            border-radius: 4px 0 0 4px;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .exp-card:hover {
+            border-color: rgba(var(--accent-rgb), 0.35);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(var(--accent-rgb), 0.12);
+        }
+
+        .exp-card:hover::before {
+            opacity: 1;
+            width: 5px;
+        }
+
+        .exp-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 22px 24px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .exp-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: var(--badge-bg);
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--accent);
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .exp-card:hover .exp-icon {
+            background: rgba(var(--accent-rgb), 0.15);
+            border-color: rgba(var(--accent-rgb), 0.4);
+        }
+
+        .exp-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .exp-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .exp-meta h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .exp-date {
+            font-size: 0.75rem;
+            color: var(--accent);
+            background: var(--badge-bg);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .exp-company {
+            font-size: 0.84rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .exp-category {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+
+        .exp-category.professional {
+            background: rgba(6, 182, 212, 0.12);
+            color: #06b6d4;
+            border: 1px solid rgba(6, 182, 212, 0.25);
+        }
+
+        .exp-category.freelance {
+            background: rgba(245, 158, 11, 0.12);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+
+        .exp-category.education {
+            background: rgba(139, 92, 246, 0.12);
+            color: #8b5cf6;
+            border: 1px solid rgba(139, 92, 246, 0.25);
+        }
+
+        .exp-category.project {
+            background: rgba(236, 72, 153, 0.12);
+            color: #ec4899;
+            border: 1px solid rgba(236, 72, 153, 0.25);
+        }
+
+        .exp-category.organization {
+            background: rgba(34, 197, 94, 0.12);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.25);
+        }
+
+        .exp-chevron {
+            font-size: 20px;
+            color: var(--text-muted);
+            transition: transform 0.35s ease;
+            flex-shrink: 0;
+        }
+
+        .exp-card.open .exp-chevron {
+            transform: rotate(180deg);
+        }
+
+        .exp-body {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.35s ease;
+        }
+
+        .exp-card.open .exp-body {
+            grid-template-rows: 1fr;
+        }
+
+        .exp-body-inner {
+            overflow: hidden;
+        }
+
+        .exp-body-content {
+            padding: 0 24px 22px 90px;
+        }
+
+        .exp-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .exp-bullets {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .exp-bullets li {
+            position: relative;
+            padding-left: 20px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .exp-bullets li::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .exp-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .exp-tags span {
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* =========================================
+           8. PROJECT SECTION
+           ========================================= */
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 22px;
+            background: transparent;
+            border: 1.5px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: var(--radius-xl);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.88rem;
+            transition: var(--transition);
+            font-family: var(--font-main);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active-filter {
+            background: var(--gradient-accent);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .portfolio-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .portfolio-item {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .portfolio-item.hide {
+            display: none;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-8px);
+            border-color: rgba(var(--accent-rgb), 0.3);
+            box-shadow: 0 20px 40px rgba(var(--accent-rgb), 0.1);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .portfolio-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-img img {
+            transform: scale(1.08);
+        }
+
+        .portfolio-info {
+            padding: 22px;
+        }
+
+        .portfolio-info h4 {
+            margin-bottom: 6px;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .portfolio-info p {
+            color: var(--accent);
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-family: var(--font-mono);
+        }
+
+        .portfolio-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+
+        .portfolio-links {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .portfolio-links-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .portfolio-links a.icon-link {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            color: var(--accent);
+            transition: var(--transition);
+            font-size: 16px;
+            text-decoration: none;
+        }
+
+        .portfolio-links a.icon-link:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .portfolio-btn-detail {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 16px;
+            border-radius: var(--radius-xl);
+            background: var(--badge-bg);
+            border: 1px solid var(--badge-border);
+            color: var(--accent);
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .portfolio-btn-detail:hover {
+            background: var(--gradient-accent);
+            color: #fff;
+            border-color: transparent;
+            transform: translateX(3px);
+            box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.3);
+        }
+
+        /* =========================================
+           9. CERTIFICATES SECTION
+           ========================================= */
+        .certificate-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .cert-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(var(--accent-rgb), 0.3);
+            box-shadow: 0 20px 40px rgba(var(--accent-rgb), 0.1);
+        }
+
+        .cert-img-box {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .cert-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .cert-card:hover .cert-img-box img {
+            transform: scale(1.08);
+        }
+
+        .cert-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cert-info h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .cert-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+        }
+
+        .cert-tags span {
+            font-size: 0.7rem;
+            background: var(--badge-bg);
+            color: var(--accent);
+            padding: 3px 10px;
+            border-radius: 10px;
+            margin-right: 5px;
+            font-weight: 500;
+        }
+
+        .btn-view {
+            margin-top: auto;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--accent);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            font-family: var(--font-main);
+        }
+
+        .btn-view:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: var(--radius-md);
+            border: 2px solid rgba(var(--accent-rgb), 0.3);
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 24px;
+            right: 30px;
+            font-size: 36px;
+            color: #fff;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-lightbox:hover {
+            color: var(--accent);
+        }
+
+        /* =========================================
+           10. CONTACT SECTION
+           ========================================= */
+        .contact-container {
+            display: flex;
+            gap: 40px;
+        }
+
+        .contact-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .info-box {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            padding: 20px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .info-box:hover {
+            border-color: rgba(var(--accent-rgb), 0.3);
+            transform: translateX(4px);
+        }
+
+        .info-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--badge-bg);
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .info-text h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .info-text p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .map-box {
+            width: 100%;
+            height: 250px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .map-box iframe {
+            width: 100%;
+            height: 100%;
+            filter: var(--map-filter);
+            transition: filter var(--transition);
+        }
+
+        .contact-form {
+            flex: 1.2;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            padding: 36px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-form h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .input-field:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1);
+        }
+
+        .input-field::placeholder {
+            color: var(--text-muted);
+        }
+
+        textarea.input-field {
+            resize: none;
+            height: 120px;
+        }
+
+        .btn-send {
+            width: 100%;
+            padding: 14px;
+            background: var(--gradient-accent);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-xl);
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(var(--accent-rgb), 0.35);
+        }
+
+        /* =========================================
+           11. FOOTER
+           ========================================= */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 30px 8%;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        footer span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Back to top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--gradient-accent);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            border: none;
+            box-shadow: 0 4px 15px rgba(var(--accent-rgb), 0.4);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px);
+        }
+
+        /* =========================================
+           12. INTRO OVERLAY
+           ========================================= */
+        .intro-overlay {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #050510;
+            z-index: 3000;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .intro-overlay.hidden {
+            transform: translateY(-100%);
+        }
+
+        .intro-text-center {
+            font-size: clamp(20px, 5vw, 38px);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 1px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            font-family: var(--font-mono);
+        }
+
+        .intro-text-center.show {
+            opacity: 1;
+        }
+
+        body.intro-active {
+            overflow: hidden;
+        }
+
+        /* =========================================
+           13. RESPONSIVE
+           ========================================= */
+        @media (max-width: 991px) {
+            header {
+                padding: 14px 5%;
+            }
+
+            section {
+                padding: 100px 5% 50px;
+            }
+
+            #home {
+                flex-direction: column-reverse;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .home-content {
+                max-width: 100%;
+            }
+
+            .home-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .home-roles {
+                justify-content: center;
+            }
+
+            .btn-group {
+                justify-content: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+
+            .hero-img-wrapper {
+                width: 280px;
+                height: 280px;
+            }
+
+            .hero-float-badge {
+                display: none;
+            }
+
+            .about-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-left {
+                width: 100%;
+                flex: none;
+            }
+
+            .about-img-card {
+                width: 260px;
+                height: 340px;
+                margin: 0 auto 20px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            #nav-menu {
+                position: absolute;
+                top: 100%;
+                right: -100%;
+                width: 100%;
+                max-height: 80vh;
+                overflow-y: auto;
+                background: var(--header-bg);
+                backdrop-filter: blur(30px);
+                flex-direction: column;
+                align-items: center;
+                padding: 30px 0;
+                transition: 0.4s ease;
+                border-bottom: 1px solid var(--border-color);
+                gap: 6px;
+            }
+
+            #nav-menu.show {
+                right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title h2 {
+                font-size: 30px;
+            }
+
+            .home-content h1 {
+                font-size: 32px;
+                letter-spacing: -1px;
+            }
+
+            .hero-img-wrapper {
+                width: 240px;
+                height: 240px;
+            }
+
+            .about-img-card {
+                width: 240px;
+                height: 300px;
+            }
+
+            .portfolio-filter {
+                flex-wrap: wrap;
+            }
+
+            .contact-form {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 90px 5% 40px;
+            }
+
+            .home-content h1 {
+                font-size: 28px;
+            }
+
+            .hero-img-wrapper {
+                width: 200px;
+                height: 200px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .portfolio-container {
+                grid-template-columns: 1fr;
+            }
+
+            .certificate-container {
+                grid-template-columns: 1fr;
+            }
+
+            .exp-top-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .exp-body-content {
+                padding: 0 16px 18px 70px;
+            }
+        }
+    </style>
+</head>
+
+<body class="intro-active">
+
+    <!-- 3D Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Intro Overlay -->
+    <div class="intro-overlay">
+        <div class="intro-text-center" id="intro-text"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <a href="#home" class="logo">N.<span>Hemalia</span>.P</a>
+
+        <div class="nav-right">
+            <ul id="nav-menu">
+                <li><a href="#home" class="active" data-i18n="nav_home">Home</a></li>
+                <li><a href="#about" data-i18n="nav_about">About</a></li>
+                <li><a href="#experience" data-i18n="nav_experience">Experience</a></li>
+                <li><a href="#project" data-i18n="nav_project">Project</a></li>
+                <li><a href="#certificates" data-i18n="nav_certificates">Certificates</a></li>
+                <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class='bx bx-moon'></i>
+                <i class='bx bx-sun'></i>
+            </button>
+            <div class="lang-toggle" id="langToggle" aria-label="Toggle language">
+                <span class="lang-opt active" data-lang-btn="en">EN</span>
+                <span class="lang-div">|</span>
+                <span class="lang-opt" data-lang-btn="id">ID</span>
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <i class='bx bx-menu'></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== HOME ===== -->
+    <section id="home">
+        <div class="home-content">
+            <div class="home-tag">
+                <span class="dot"></span>
+                <span data-i18n="home_tag">Open to Opportunities</span>
+            </div>
+            <h1><span data-i18n="home_greeting">Hello, I'm</span><br><span class="name-accent">Nazwa Hemalia
+                    Putri</span></h1>
+            <div class="home-roles">
+                <span class="role-prefix">&lt;</span>
+                <span class="typed-role" id="typed-role"></span>
+                <span class="role-prefix">/&gt;</span>
+            </div>
+            <p data-i18n="home_bio">Fresh graduate from Informatics Engineering at UIN SGD with a strong passion for IT,
+                data analysis, and digital solutions. I thrive in collaborative team settings and adapt quickly to new
+                challenges.</p>
+
+            <div class="btn-group">
+                <a href="#project" class="btn-primary">
+                    <i class='bx bx-layer'></i> <span data-i18n="home_btn_projects">View Projects</span>
+                </a>
+                <a href="https://drive.google.com/file/d/1n2lLGTpsvmkjd7yiuOeWLZisFnQKj1aI/view?usp=sharing"
+                    target="_blank" class="btn-outline">
+                    <i class='bx bx-download'></i> <span data-i18n="home_btn_cv">Download CV</span>
+                </a>
+                <a href="#contact" class="btn-outline">
+                    <i class='bx bx-send'></i> <span data-i18n="home_btn_hire">Hire Me</span>
+                </a>
+            </div>
+
+            <div class="social-icons">
+                <a href="https://www.instagram.com/nzwa_ptr03/" target="_blank" aria-label="Instagram">
+                    <img src="assets/img/instagram.png" alt="Instagram" />
+                </a>
+                <a href="https://www.linkedin.com/in/nazwa-hemalia-putri-270322248" target="_blank"
+                    aria-label="LinkedIn">
+                    <img src="assets/img/linkedin.png" alt="LinkedIn" />
+                </a>
+                <a href="https://github.com/Nzwaaa" target="_blank" aria-label="GitHub">
+                    <img src="assets/img/github.png" alt="GitHub" />
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-img-wrapper">
+            <div class="hero-img-ring"></div>
+            <div class="hero-img-inner">
+                <img src="assets/img/profile-wisuda.png" alt="Nazwa Hemalia Putri">
+            </div>
+            <!-- Floating badges -->
+            <div class="hero-float-badge">
+                <i class='bx bx-bar-chart-alt-2'></i> Data Analyst
+            </div>
+            <div class="hero-float-badge">
+                <i class='bx bx-code-alt'></i> Developer
+            </div>
+            <div class="hero-float-badge">
+                <i class='bx bx-brain'></i> AI/ML
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section id="about">
+        <div class="section-title">
+            <h2 data-i18n="about_title">About <span>Me</span></h2>
+            <p data-i18n="about_subtitle">Get to know me a little better</p>
+        </div>
+        <div class="about-container">
+            <div class="about-right">
+                <div class="about-desc">
+                    <p data-i18n="about_desc">A passionate Computer Engineering — IT student at UIN Bandung with a
+                        strong drive for technology and innovation. Originally from Garut, now exploring the tech world
+                        in Bandung. I am fascinated by the Internet of Things (IoT) and always eager to learn new
+                        things.</p>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item"><i class='bx bxs-graduation'></i><span>UIN Sunan Gunung Djati</span></div>
+                    <div class="info-item"><i class='bx bxs-map'></i><span>Bandung, Indonesia</span></div>
+                    <div class="info-item"><i class='bx bxs-envelope'></i><span>naf50951@gmail.com</span></div>
+                    <div class="info-item"><i class='bx bxs-flag-alt'></i><span>Indonesian</span></div>
+                </div>
+
+                <div class="passion-box">
+                    <div class="passion-item">
+                        <i class='bx bx-code-alt'></i>
+                        <div>
+                            <h4 data-i18n="about_tech_title">Tech Enthusiast</h4>
+                            <p data-i18n="about_tech_desc">Exploring new technologies & coding.</p>
+                        </div>
+                    </div>
+                    <div class="passion-item">
+                        <i class='bx bx-group'></i>
+                        <div>
+                            <h4 data-i18n="about_lead_title">Leadership</h4>
+                            <p data-i18n="about_lead_desc">Active in organizations & teamwork.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 data-i18n="about_skills_title">My <span>Skills</span></h3>
+                <div class="skills-grid">
+                    <div class="skill-card"><i class='bx bxl-html5'></i><span>HTML</span></div>
+                    <div class="skill-card"><i class='bx bxl-css3'></i><span>CSS</span></div>
+                    <div class="skill-card"><i class='bx bxl-javascript'></i><span>JS</span></div>
+                    <div class="skill-card"><i class='bx bxl-python'></i><span>Python</span></div>
+                    <div class="skill-card"><i class='bx bxl-android'></i><span>Android</span></div>
+                    <div class="skill-card"><i class='bx bxs-data'></i><span>MySQL</span></div>
+                    <div class="skill-card"><i class='bx bxl-git'></i><span>Git</span></div>
+                    <div class="skill-card"><i class='bx bx-bar-chart-alt-2'></i><span>Data Analyst</span></div>
+                    <div class="skill-card"><i class='bx bxl-figma'></i><span>Figma</span></div>
+                </div>
+
+                <!-- Prestasi & Publikasi (Achievements & Publications) -->
+                <h3 style="margin-top: 36px; margin-bottom: 8px;" data-i18n="about_achievements_title">Prestasi & <span>Publikasi</span></h3>
+                
+                <div class="about-achievements">
+                    <!-- Group 1: Kompetisi Internasional -->
+                    <div class="achievement-group-label">
+                        <i class='bx bxs-trophy'></i> <span data-i18n="achieve_grp_comp">Kompetisi Internasional</span>
+                    </div>
+
+                    <!-- Item 1: IICYMS 2026 -->
+                    <div class="about-list-item achievement-item">
+                        <div class="achievement-icon medal-silver">
+                            <i class='bx bxs-medal'></i>
+                        </div>
+                        <div class="achievement-content">
+                            <div class="achievement-header">
+                                <strong>Silver Medal — IICYMS 2026</strong>
+                                <span class="achievement-year">Juli 2026</span>
+                            </div>
+                            <div class="achievement-event">International Invention Competition for Young Moslem Scientists (IICYMS)</div>
+                            <div class="achievement-collab">IYSA x UNIKOM • Didukung oleh ICGI & MYSO (Malaysia)</div>
+                            <p class="achievement-desc">
+                                Meraih Medali Perak (Silver Medal) pada kategori <em>Applied Life Science</em> untuk proyek inovasi <strong>"Signora: AI-Powered Translation System for BISINDO"</strong>. Perancangan sistem penerjemah otomatis berbasis Artificial Intelligence untuk Bahasa Isyarat Indonesia (BISINDO) melalui pemodelan data dan Machine Learning.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: IICYMS 2025 -->
+                    <div class="about-list-item achievement-item">
+                        <div class="achievement-icon medal-silver">
+                            <i class='bx bxs-medal'></i>
+                        </div>
+                        <div class="achievement-content">
+                            <div class="achievement-header">
+                                <strong>Silver Medal — IICYMS 2025</strong>
+                                <span class="achievement-year">Juli 2025</span>
+                            </div>
+                            <div class="achievement-event">International Invention Competition for Young Moslem Scientists (IICYMS)</div>
+                            <div class="achievement-collab">IYSA • Didukung oleh MIICA (Malaysia) & UNIKOM</div>
+                            <p class="achievement-desc">
+                                Memenangkan Medali Perak (Silver Medal) pada kategori <em>Social Science</em> kompetisi daring internasional IICYMS 2025 untuk proyek <strong>"Aequilibria: A Sentiment Analysis Approach for Identifying Emotional Imbalance in Daily Reflections"</strong> menggunakan teknik Natural Language Processing (NLP).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Group 2: Publikasi Ilmiah -->
+                    <div class="achievement-group-label">
+                        <i class='bx bxs-file-doc'></i> <span data-i18n="achieve_grp_pub">Publikasi Ilmiah</span>
+                    </div>
+
+                    <!-- Item 3: ResearchGate Publication -->
+                    <div class="about-list-item achievement-item">
+                        <div class="achievement-icon pub-icon">
+                            <i class='bx bx-book-bookmark'></i>
+                        </div>
+                        <div class="achievement-content">
+                            <div class="achievement-header">
+                                <strong>Publikasi Riset Internasional</strong>
+                                <span class="achievement-year">2025</span>
+                            </div>
+                            <div class="achievement-event">XGBoost and Mixed Effect Model: Can Zakat (Alms) Improve the Human Development Index in Indonesia?</div>
+                            <p class="achievement-desc">
+                                Publikasi ilmiah pada platform ResearchGate — Riset empiris mengenai dampak zakat terhadap peningkatan Indeks Pembangunan Manusia (IPM) di Indonesia memadukan algoritma Machine Learning XGBoost dan Mixed Effect Model.
+                            </p>
+                            <a href="https://www.researchgate.net/publication/409531801_XGBoost_and_Mixed_Effect_Model_Can_Zakat_Alms_Improve_the_Human_Development_Index_in_Indonesia" target="_blank" rel="noopener" class="achievement-link">
+                                <i class='bx bx-link-external'></i> <span data-i18n="achieve_link_rg">Lihat di ResearchGate</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Group 3: Karya Tulis Ilmiah / Skripsi -->
+                    <div class="achievement-group-label">
+                        <i class='bx bxs-graduation'></i> <span data-i18n="achieve_grp_thesis">Karya Tulis Ilmiah (Skripsi)</span>
+                    </div>
+
+                    <!-- Item 4: Skripsi Digilib -->
+                    <div class="about-list-item achievement-item">
+                        <div class="achievement-icon thesis-icon">
+                            <i class='bx bxs-graduation'></i>
+                        </div>
+                        <div class="achievement-content">
+                            <div class="achievement-header">
+                                <strong>Skripsi Sarjana Teknik Informatika</strong>
+                                <span class="achievement-year">2026</span>
+                            </div>
+                            <div class="achievement-event">Implementasi Case-Based Reasoning untuk Pencocokan Dokumen Menggunakan Structural Semantic Retrieval Berbasis Indo-LegalBERT dan Knowledge Graph</div>
+                            <p class="achievement-desc">
+                                UIN Sunan Gunung Djati Bandung — Mengusulkan pendekatan <em>Structural Semantic Retrieval</em> yang menggabungkan representasi semantik (Indo-LegalBERT) dan representasi struktural (Knowledge Graph) dalam kerangka kerja <em>Case-Based Reasoning</em> (CBR) untuk pencocokan dokumen hukum secara cerdas.
+                            </p>
+                            <a href="https://digilib.uinsgd.ac.id/id/eprint/133041" target="_blank" rel="noopener" class="achievement-link">
+                                <i class='bx bx-link-external'></i> <span data-i18n="achieve_link_digilib">Lihat di Digital Library UIN SGD</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EXPERIENCE ===== -->
+    <section id="experience">
+        <div class="section-title">
+            <h2 data-i18n="exp_title">Work <span>Experience</span></h2>
+            <p data-i18n="exp_subtitle">My professional journey and organizational roles</p>
+        </div>
+
+        <div class="exp-list">
+
+            <!-- Card 1: NoLimit Indonesia -->
+            <div class="exp-card open" onclick="toggleExp(this)">
+                <div class="exp-header">
+                    <div class="exp-icon"><i class='bx bx-edit-alt'></i></div>
+                    <div class="exp-meta">
+                        <div class="exp-top-row">
+                            <h3>Data Annotator - Data Validation <span class="exp-category freelance">Freelance</span></h3>
+                            <span class="exp-date">Aug 2026 — Present</span>
+                        </div>
+                        <span class="exp-company">NoLimit Indonesia</span>
+                    </div>
+                    <i class='bx bx-chevron-down exp-chevron'></i>
+                </div>
+                <div class="exp-body">
+                    <div class="exp-body-inner">
+                        <div class="exp-body-content">
+                            <p class="exp-desc">Memvalidasi dan mereview hasil analisis sentimen untuk berbagai proyek monitoring brand.</p>
+                            <ul class="exp-bullets">
+                                <li>Memastikan akurasi anotasi dan konsistensi data</li>
+                                <li>Menjaga kualitas dataset untuk pengembangan model analitik dan AI</li>
+                            </ul>
+                            <div class="exp-tags">
+                                <span>Python</span>
+                                <span>Data Labeling</span>
+                                <span>Quality Assurance</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: PT Sinar Niaga Sejahtera (Garudafood) -->
+            <div class="exp-card" onclick="toggleExp(this)">
+                <div class="exp-header">
+                    <div class="exp-icon"><i class='bx bx-line-chart'></i></div>
+                    <div class="exp-meta">
+                        <div class="exp-top-row">
+                            <h3>Data Analyst Intern <span class="exp-category professional">Internship</span></h3>
+                            <span class="exp-date">Aug 2026 — Present</span>
+                        </div>
+                        <span class="exp-company">PT Sinar Niaga Sejahtera (Garudafood)</span>
+                    </div>
+                    <i class='bx bx-chevron-down exp-chevron'></i>
+                </div>
+                <div class="exp-body">
+                    <div class="exp-body-inner">
+                        <div class="exp-body-content">
+                            <ul class="exp-bullets">
+                                <li>Analyzed operational financial data, including petty cash, reimbursement administration, and cash opname records, to maintain financial precision and identify spending trends.</li>
+                                <li>Processed and validated daily transactional data via the BOSNET system to streamline financial workflows and ensure compliance with operational budgets.</li>
+                                <li>Developed regular financial summaries and data reports to monitor operational expenditures and provide actionable insights for management.</li>
+                            </ul>
+                            <div class="exp-tags">
+                                <span>BOSNET</span>
+                                <span>Financial Analysis</span>
+                                <span>Cash Opname</span>
+                                <span>Operational Budgets</span>
+                                <span>Data Reporting</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: PT Sedjahtera Boga Kreasi -->
+            <div class="exp-card" onclick="toggleExp(this)">
+                <div class="exp-header">
+                    <div class="exp-icon"><i class='bx bx-scatter-chart'></i></div>
+                    <div class="exp-meta">
+                        <div class="exp-top-row">
+                            <h3>Data Analyst Intern <span class="exp-category professional">Internship</span></h3>
+                            <span class="exp-date">Jul 2026 — Aug 2026</span>
+                        </div>
+                        <span class="exp-company">PT Sedjahtera Boga Kreasi</span>
+                    </div>
+                    <i class='bx bx-chevron-down exp-chevron'></i>
+                </div>
+                <div class="exp-body">
+                    <div class="exp-body-inner">
+                        <div class="exp-body-content">
+                            <ul class="exp-bullets">
+                                <li>Built and implemented machine learning-based prediction models to identify trends, forecast outcomes, and support strategic decision-making.</li>
+                                <li>Executed comprehensive data cleaning and preprocessing pipelines, consolidating duplicate entries and optimizing data integration to ensure high-quality inputs for analytical calculations.</li>
+                            </ul>
+                            <div class="exp-tags">
+                                <span>Machine Learning</span>
+                                <span>Python</span>
+                                <span>Predictive Modeling</span>
+                                <span>Data Preprocessing</span>
+                                <span>Scikit-learn</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Coding Camp DBS Foundation -->
+            <div class="exp-card" onclick="toggleExp(this)">
+                <div class="exp-header">
+                    <div class="exp-icon"><i class='bx bx-code-block'></i></div>
+                    <div class="exp-meta">
+                        <div class="exp-top-row">
+                            <h3>Data Scientist Cohort <span class="exp-category education">Education</span></h3>
+                            <span class="exp-date">Jan 2026 — Jun 2026</span>
+                        </div>
+                        <span class="exp-company">Coding Camp powered by DBS Foundation</span>
+                    </div>
+                    <i class='bx bx-chevron-down exp-chevron'></i>
+                </div>
+                <div class="exp-body">
+                    <div class="exp-body-inner">
+                        <div class="exp-body-content">
+                            <ul class="exp-bullets">
+                                <li>Completed intensive training focused on data analytics, data preprocessing, exploratory data analysis (EDA), and machine learning.</li>
+                                <li>Developed end-to-end data projects, including data cleaning, modeling, evaluation, and visualization.</li>
+                            </ul>
+                            <div class="exp-tags">
+                                <span>Data Science</span>
+                                <span>EDA</span>
+                                <span>Machine Learning</span>
+                                <span>Python</span>
+                                <span>Data Visualization</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: IDCamp Indosat Ooredoo -->
+            <div class="exp-card" onclick="toggleExp(this)">
+                <div class="exp-header">
+                    <div class="exp-icon"><i class='bx bx-chip'></i></div>
+                    <div class="exp-meta">
+                        <div class="exp-top-row">
+                            <h3>Gen AI Cohort <span class="exp-category education">Education</span></h3>
+                            <span class="exp-date">Sep 2025 — May 2026</span>
+                        </div>
+                        <span class="exp-company">IDCamp Indosat Ooredoo</span>
+                    </div>
+                    <i class='bx bx-chevron-down exp-chevron'></i>
+                </div>
+                <div class="exp-body">
+                    <div class="exp-body-inner">
+                        <div class="exp-body-content">
+                            <ul class="exp-bullets">
+                                <li>Completed intensive training focused on generative AI, prompt engineering, and AI application development.</li>
+                                <li>Built practical understanding of AI tools, model usage, and responsible implementation of generative AI solutions.</li>
+                            </ul>
+                            <div class="exp-tags">
+                                <span>Generative AI</span>
+                                <span>Prompt Engineering</span>
+                                <span>LLMs</span>
+                                <span>Azure AI</span>
+                                <span>AI Development</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6: Bangkit Academy -->
+            <div class="exp-card" onclick="toggleExp(this)">
+                <div class="exp-header">
+                    <div class="exp-icon"><i class='bx bxl-android'></i></div>
+                    <div class="exp-meta">
+                        <div class="exp-top-row">
+                            <h3>Mobile Development Cohort <span class="exp-category education">Education</span></h3>
+                            <span class="exp-date">Sep 2024 — Jan 2025</span>
+                        </div>
+                        <span class="exp-company">Bangkit Academy led by Google, Tokopedia, Gojek & Traveloka</span>
+                    </div>
+                    <i class='bx bx-chevron-down exp-chevron'></i>
+                </div>
+                <div class="exp-body">
+                    <div class="exp-body-inner">
+                        <div class="exp-body-content">
+                            <ul class="exp-bullets">
+                                <li>Participated in intensive training in both frontend and backend development.</li>
+                                <li>Built scalable web applications and collaborated in team-based projects.</li>
+                            </ul>
+                            <div class="exp-tags">
+                                <span>Kotlin</span>
+                                <span>Android Studio</span>
+                                <span>Frontend</span>
+                                <span>Backend</span>
+                                <span>Team Collaboration</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 7: Catalog UMKM Website -->
+            <div class="exp-card" onclick="toggleExp(this)">
+                <div class="exp-header">
+                    <div class="exp-icon"><i class='bx bx-store-alt'></i></div>
+                    <div class="exp-meta">
+                        <div class="exp-top-row">
+                            <h3>Project Manager <span class="exp-category project">Project</span></h3>
+                            <span class="exp-date">Dec 2024 — Feb 2025</span>
+                        </div>
+                        <span class="exp-company">Catalog UMKM Website</span>
+                    </div>
+                    <i class='bx bx-chevron-down exp-chevron'></i>
+                </div>
+                <div class="exp-body">
+                    <div class="exp-body-inner">
+                        <div class="exp-body-content">
+                            <ul class="exp-bullets">
+                                <li>Developed a UMKM catalog website to showcase local products and services.</li>
+                                <li>Coordinated with village authorities and UMKM stakeholders to complete project needs.</li>
+                            </ul>
+                            <div class="exp-tags">
+                                <span>Project Management</span>
+                                <span>Stakeholder Coordination</span>
+                                <span>Web Development</span>
+                                <span>Community Impact</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 8: Jeep and Villa Rental Website -->
+            <div class="exp-card" onclick="toggleExp(this)">
+                <div class="exp-header">
+                    <div class="exp-icon"><i class='bx bx-car'></i></div>
+                    <div class="exp-meta">
+                        <div class="exp-top-row">
+                            <h3>Project Manager <span class="exp-category project">Project</span></h3>
+                            <span class="exp-date">Dec 2024 — Jan 2025</span>
+                        </div>
+                        <span class="exp-company">Jeep & Villa Rental Website Project</span>
+                    </div>
+                    <i class='bx bx-chevron-down exp-chevron'></i>
+                </div>
+                <div class="exp-body">
+                    <div class="exp-body-inner">
+                        <div class="exp-body-content">
+                            <ul class="exp-bullets">
+                                <li>Led the development of a jeep and villa rental website by coordinating team tasks, requirements, and project progress.</li>
+                                <li>Oversaw the implementation of rental information pages, booking features, and data management.</li>
+                            </ul>
+                            <div class="exp-tags">
+                                <span>Project Management</span>
+                                <span>Feature Planning</span>
+                                <span>Booking System</span>
+                                <span>Data Management</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 9: HIMATIF -->
+            <div class="exp-card" onclick="toggleExp(this)">
+                <div class="exp-header">
+                    <div class="exp-icon"><i class='bx bx-group'></i></div>
+                    <div class="exp-meta">
+                        <div class="exp-top-row">
+                            <h3>Organization Development Division <span class="exp-category organization">Organization</span></h3>
+                            <span class="exp-date">Aug 2023 — Mar 2024</span>
+                        </div>
+                        <span class="exp-company">Himpunan Mahasiswa Teknik Informatika (HIMATIF)</span>
+                    </div>
+                    <i class='bx bx-chevron-down exp-chevron'></i>
+                </div>
+                <div class="exp-body">
+                    <div class="exp-body-inner">
+                        <div class="exp-body-content">
+                            <ul class="exp-bullets">
+                                <li>Evaluated HIMATIF administrators and implemented a performance monitoring system.</li>
+                                <li>Built communication with internal and external organizations to strengthen collaboration.</li>
+                            </ul>
+                            <div class="exp-tags">
+                                <span>Organizational Development</span>
+                                <span>Leadership</span>
+                                <span>Performance Monitoring</span>
+                                <span>Strategic Communication</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS ===== -->
+    <section id="project">
+        <div class="section-title">
+            <h2 data-i18n="proj_title">My <span>Projects</span></h2>
+            <p data-i18n="proj_subtitle">Here are some of the projects I've worked on</p>
+        </div>
+
+        <div class="portfolio-filter">
+            <button class="filter-btn active-filter" onclick="filterProjects('all')" data-i18n="filter_all">All</button>
+            <button class="filter-btn" onclick="filterProjects('web')" data-i18n="filter_web">Web</button>
+            <button class="filter-btn" onclick="filterProjects('android')" data-i18n="filter_android">Android</button>
+            <button class="filter-btn" onclick="filterProjects('data-analyst')"
+                data-i18n="filter_dashboard">Data Analyst / Data Scientist</button>
+        </div>
+
+        <div class="portfolio-container">
+
+            <!-- Dashboard Project 1: Garudafood Financial Dashboard -->
+            <div class="portfolio-item data-analyst">
+                <div class="portfolio-img">
+                    <a href="project-detail.html?id=garudafood-financial-dashboard">
+                        <img src="dashbaord-projek/garudafood-executive-dashboard.jpg" alt="Executive Dashboard Keuangan Garudafood">
+                    </a>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Executive Dashboard Keuangan SNS</h4>
+                    <p>PT SNS (Garudafood) — Data Analyst / Data Scientist</p>
+                    <div class="portfolio-desc">Dashboard pemantauan arus kas harian, penyerapan dana Head Office, rasio biaya operasional, dan 100% audit rekonsiliasi kas Depo Garut.</div>
+                    <div class="portfolio-links">
+                        <a href="project-detail.html?id=garudafood-financial-dashboard" class="portfolio-btn-detail">
+                            <i class='bx bx-file'></i> Detail Project
+                        </a>
+                        <div class="portfolio-links-actions">
+                            <a href="project-detail.html?id=garudafood-financial-dashboard" class="icon-link" title="Lihat Detail"><i class='bx bx-zoom-in'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Project 2: Bakso Sedjahtera Predictive Analysis -->
+            <div class="portfolio-item data-analyst">
+                <div class="portfolio-img">
+                    <a href="project-detail.html?id=bakso-sedjahtera-predictive-analysis">
+                        <img src="dashbaord-projek/bakso-sedjahtera-predictive-analysis.jpg" alt="Sales Predictive Analysis Bakso Sedjahtera">
+                    </a>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Sales Predictive Analysis & ML Forecasting</h4>
+                    <p>Bakso Sedjahtera — Machine Learning</p>
+                    <div class="portfolio-desc">Model peramalan transaksi horizon 30 hari berbasis Prophet ML, pola musiman pesanan, akurasi 76.01%, dan analisis void.</div>
+                    <div class="portfolio-links">
+                        <a href="project-detail.html?id=bakso-sedjahtera-predictive-analysis" class="portfolio-btn-detail">
+                            <i class='bx bx-file'></i> Detail Project
+                        </a>
+                        <div class="portfolio-links-actions">
+                            <a href="project-detail.html?id=bakso-sedjahtera-predictive-analysis" class="icon-link" title="Lihat Detail"><i class='bx bx-zoom-in'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Project 3: Bakso Sedjahtera Trend Sales -->
+            <div class="portfolio-item data-analyst">
+                <div class="portfolio-img">
+                    <a href="project-detail.html?id=bakso-sedjahtera-trend-sales">
+                        <img src="dashbaord-projek/bakso-sedjahtera-trend-sales.jpg" alt="Trend Sales Bakso Sedjahtera">
+                    </a>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Interactive Trend Sales & Order Density Analytics</h4>
+                    <p>Bakso Sedjahtera (PT Sedjahtera Boga Kreasi)</p>
+                    <div class="portfolio-desc">Dashboard analitik performa penjualan tahunan, kurva kepadatan transaksi jam sibuk, perbandingan weekday vs weekend, dan evaluasi outlet.</div>
+                    <div class="portfolio-links">
+                        <a href="project-detail.html?id=bakso-sedjahtera-trend-sales" class="portfolio-btn-detail">
+                            <i class='bx bx-file'></i> Detail Project
+                        </a>
+                        <div class="portfolio-links-actions">
+                            <a href="project-detail.html?id=bakso-sedjahtera-trend-sales" class="icon-link" title="Lihat Detail"><i class='bx bx-zoom-in'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Project 4: Bakso Sedjahtera Sales Void -->
+            <div class="portfolio-item data-analyst">
+                <div class="portfolio-img">
+                    <a href="project-detail.html?id=bakso-sedjahtera-sales-void">
+                        <img src="dashbaord-projek/bakso-sedjahtera-sales-void.jpg" alt="Sales Void Bakso Sedjahtera">
+                    </a>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Sales Void & Risk Mitigation Dashboard</h4>
+                    <p>Bakso Sedjahtera — Audit & Risk Analytics</p>
+                    <div class="portfolio-desc">Dashboard mitigasi risiko pembatalan pesanan kasir POS, identifikasi jam rawan malam, produk paling sering void, dan ranking outlet.</div>
+                    <div class="portfolio-links">
+                        <a href="project-detail.html?id=bakso-sedjahtera-sales-void" class="portfolio-btn-detail">
+                            <i class='bx bx-file'></i> Detail Project
+                        </a>
+                        <div class="portfolio-links-actions">
+                            <a href="project-detail.html?id=bakso-sedjahtera-sales-void" class="icon-link" title="Lihat Detail"><i class='bx bx-zoom-in'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Project 5: Looker Studio Sales Performance Insight -->
+            <div class="portfolio-item data-analyst">
+                <div class="portfolio-img">
+                    <a href="project-detail.html?id=sales-performance-insight-dashboard">
+                        <img src="dashbaord-projek/performance-insight-dashboard.png" alt="Dashboard Analisis Kinerja Penjualan">
+                    </a>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Dashboard Analisis Kinerja Penjualan</h4>
+                    <p>Looker Studio — Data Analyst / Data Scientist</p>
+                    <div class="portfolio-desc">Dashboard analisis kinerja penjualan menggunakan Looker Studio untuk memonitor metrik bisnis, funnel penjualan, alokasi budget, dan tren.</div>
+                    <div class="portfolio-links">
+                        <a href="project-detail.html?id=sales-performance-insight-dashboard" class="portfolio-btn-detail">
+                            <i class='bx bx-file'></i> Detail Project
+                        </a>
+                        <div class="portfolio-links-actions">
+                            <a href="project-detail.html?id=sales-performance-insight-dashboard" class="icon-link" title="Lihat Detail"><i class='bx bx-zoom-in'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Project: Layanan Desa -->
+            <div class="portfolio-item web">
+                <div class="portfolio-img">
+                    <a href="project-detail.html?id=layanan-desa">
+                        <img src="assets/img/portfolio/layanan_desa.png" alt="Layanan Desa">
+                    </a>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Layanan Desa</h4>
+                    <p>Web Development</p>
+                    <div class="portfolio-desc">Pengembangan frontend website layanan desa dengan fitur berita aktual dan keterbukaan informasi publik.</div>
+                    <div class="portfolio-links">
+                        <a href="project-detail.html?id=layanan-desa" class="portfolio-btn-detail">
+                            <i class='bx bx-file'></i> Detail Project
+                        </a>
+                        <div class="portfolio-links-actions">
+                            <a href="project-detail.html?id=layanan-desa" class="icon-link" title="Detail"><i class='bx bx-zoom-in'></i></a>
+                            <a href="https://github.com/SifaMutiasyaa/WebsiteLayananDesa" target="_blank" class="icon-link" title="GitHub"><i class='bx bxl-github'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Android Project: MAHA -->
+            <div class="portfolio-item android">
+                <div class="portfolio-img">
+                    <a href="project-detail.html?id=maha-health-app">
+                        <img src="assets/img/portfolio/maha.png" alt="MAHA">
+                    </a>
+                </div>
+                <div class="portfolio-info">
+                    <h4>MAHA</h4>
+                    <p>Android Development</p>
+                    <div class="portfolio-desc">Aplikasi mobile My Assistent Health Apps berbasis Android native. Sinkronisasi data cloud GCP dan tracking kalori harian.</div>
+                    <div class="portfolio-links">
+                        <a href="project-detail.html?id=maha-health-app" class="portfolio-btn-detail">
+                            <i class='bx bx-file'></i> Detail Project
+                        </a>
+                        <div class="portfolio-links-actions">
+                            <a href="project-detail.html?id=maha-health-app" class="icon-link" title="Detail"><i class='bx bx-zoom-in'></i></a>
+                            <a href="https://github.com/Ryhnslmn13/MAHA" target="_blank" class="icon-link" title="GitHub"><i class='bx bxl-github'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Project: PAW -->
+            <div class="portfolio-item web">
+                <div class="portfolio-img">
+                    <img src="assets/img/portfolio/paw.png" alt="PAW">
+                </div>
+                <div class="portfolio-info">
+                    <h4>PAW (PWA)</h4>
+                    <p>Web Development</p>
+                    <div class="portfolio-desc">Progressive Web App (PWA) untuk pengalaman interaktif mendekati aplikasi native.</div>
+                    <div class="portfolio-links">
+                        <a href="assets/img/portfolio/paw.png" target="_blank" class="icon-link" title="Zoom"><i class='bx bx-zoom-in'></i></a>
+                        <a href="https://github.com/Syidwan/PAW" target="_blank" class="icon-link" title="GitHub"><i class='bx bxl-github'></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Android Project: Yumify -->
+            <div class="portfolio-item android">
+                <div class="portfolio-img">
+                    <a href="project-detail.html?id=yumify-recipe-app">
+                        <img src="assets/img/portfolio/yumify.png" alt="Yumify">
+                    </a>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Yumify</h4>
+                    <p>Android Development</p>
+                    <div class="portfolio-desc">Aplikasi mobile pintar pencarian resep dan rekomendasi masakan berdasarkan bahan dapur yang tersedia.</div>
+                    <div class="portfolio-links">
+                        <a href="project-detail.html?id=yumify-recipe-app" class="portfolio-btn-detail">
+                            <i class='bx bx-file'></i> Detail Project
+                        </a>
+                        <div class="portfolio-links-actions">
+                            <a href="project-detail.html?id=yumify-recipe-app" class="icon-link" title="Detail"><i class='bx bx-zoom-in'></i></a>
+                            <a href="https://github.com/Nzwaaa/Yumify" target="_blank" class="icon-link" title="GitHub"><i class='bx bxl-github'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Android Project: Story At Bangkit -->
+            <div class="portfolio-item android">
+                <div class="portfolio-img">
+                    <img src="assets/img/portfolio/bangkit.png" alt="Story At Bangkit">
+                </div>
+                <div class="portfolio-info">
+                    <h4>Story At Bangkit</h4>
+                    <p>Android Development</p>
+                    <div class="portfolio-desc">Pengembangan antarmuka UI/UX modern dan integrasi RESTful Story API pada aplikasi Android.</div>
+                    <div class="portfolio-links">
+                        <a href="assets/img/portfolio/bangkit.png" target="_blank" class="icon-link" title="Zoom"><i class='bx bx-zoom-in'></i></a>
+                        <a href="https://github.com/Nzwaaa/Yumify/tree/master/app" target="_blank" class="icon-link" title="GitHub"><i class='bx bxl-github'></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Project: Menu Makanan -->
+            <div class="portfolio-item web">
+                <div class="portfolio-img">
+                    <img src="assets/img/portfolio/makanan.png" alt="Menu Makanan">
+                </div>
+                <div class="portfolio-info">
+                    <h4>Menu Makanan</h4>
+                    <p>Web Development</p>
+                    <div class="portfolio-desc">Aplikasi web katalog menu makanan interaktif dengan sistem backend manajemen data.</div>
+                    <div class="portfolio-links">
+                        <a href="assets/img/portfolio/makanan.png" target="_blank" class="icon-link" title="Zoom"><i class='bx bx-zoom-in'></i></a>
+                        <a href="https://github.com/Nzwaaa/UAS-PRAK-WEB" target="_blank" class="icon-link" title="GitHub"><i class='bx bxl-github'></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== CERTIFICATES ===== -->
+    <section id="certificates">
+        <div class="section-title">
+            <h2 data-i18n="cert_title">My <span>Certificates</span></h2>
+            <p data-i18n="cert_subtitle">Achievements & Professional Development</p>
+        </div>
+        <div class="certificate-container">
+            <!-- Certificate 1: BNSP Associate Data Analyst -->
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/bnsp_associate_data_analyst.jpg')">
+                    <img src="assets/img/bnsp_associate_data_analyst.jpg" alt="Associate Data Analyst BNSP">
+                </div>
+                <div class="cert-info">
+                    <h4>Associate Data Analyst (Analis Data Madya)</h4>
+                    <div class="cert-meta"><span>BNSP LSP-Data</span><span>Des 2025 - Des 2028</span></div>
+                    <div class="cert-tags">
+                        <span style="background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.4);">BNSP Certified</span>
+                        <span>Data Analyst</span>
+                        <span>AI</span>
+                    </div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/bnsp_associate_data_analyst.jpg')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+
+            <!-- Certificate 2: Belajar Fundamental Pemrosesan Data -->
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/fundamental_pemrosesan_data.png')">
+                    <img src="assets/img/fundamental_pemrosesan_data.png" alt="Fundamental Pemrosesan Data">
+                </div>
+                <div class="cert-info">
+                    <h4>Belajar Fundamental Pemrosesan Data</h4>
+                    <div class="cert-meta"><span>Dicoding</span><span>Mar 2026 - Mar 2029</span></div>
+                    <div class="cert-tags"><span>Data Processing</span><span>Dicoding</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/fundamental_pemrosesan_data.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+
+            <!-- Certificate 3: Belajar Dasar Structured Query Language (SQL) -->
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/dasar_sql.png')">
+                    <img src="assets/img/dasar_sql.png" alt="Dasar SQL">
+                </div>
+                <div class="cert-info">
+                    <h4>Belajar Dasar Structured Query Language (SQL)</h4>
+                    <div class="cert-meta"><span>Dicoding</span><span>Nov 2025 - Nov 2028</span></div>
+                    <div class="cert-tags"><span>SQL</span><span>Database</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/dasar_sql.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+
+            <!-- Certificate 4: Belajar Dasar Data Science -->
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/dasar_data_science.png')">
+                    <img src="assets/img/dasar_data_science.png" alt="Dasar Data Science">
+                </div>
+                <div class="cert-info">
+                    <h4>Belajar Dasar Data Science</h4>
+                    <div class="cert-meta"><span>Dicoding</span><span>Okt 2025 - Okt 2028</span></div>
+                    <div class="cert-tags"><span>Data Science</span><span>Analytics</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/dasar_data_science.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+
+            <!-- Certificate 5: Belajar Penerapan Data Science dengan Microsoft Fabric -->
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/data_science_microsoft_fabric.png')">
+                    <img src="assets/img/data_science_microsoft_fabric.png" alt="Data Science Microsoft Fabric">
+                </div>
+                <div class="cert-info">
+                    <h4>Belajar Penerapan Data Science dengan Microsoft Fabric</h4>
+                    <div class="cert-meta"><span>Dicoding</span><span>Okt 2025 - Okt 2028</span></div>
+                    <div class="cert-tags"><span>Microsoft Fabric</span><span>Data Science</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/data_science_microsoft_fabric.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/memulai_pemrograman_dg_java.png')"><img src="assets/img/memulai_pemrograman_dg_java.png" alt="Java Cert"></div>
+                <div class="cert-info">
+                    <h4>Memulai Pemrograman dengan Java</h4>
+                    <div class="cert-meta"><span>Dicoding</span><span>June 2023</span></div>
+                    <div class="cert-tags"><span>Frontend</span><span>HTML/CSS</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/memulai_pemrograman_dg_java.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/kotlin.png')"><img src="assets/img/kotlin.png" alt="Kotlin Cert"></div>
+                <div class="cert-info">
+                    <h4>Memulai Pemrograman dengan Kotlin</h4>
+                    <div class="cert-meta"><span>Bangkit</span><span>Aug 2023</span></div>
+                    <div class="cert-tags"><span>Kotlin</span><span>Mobile</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/kotlin.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/pyhton.png')"><img src="assets/img/pyhton.png" alt="Python Cert"></div>
+                <div class="cert-info">
+                    <h4>Memulai Pemrograman dengan Python</h4>
+                    <div class="cert-meta"><span>AWS</span><span>Sept 2023</span></div>
+                    <div class="cert-tags"><span>Cloud</span><span>Server</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/pyhton.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/fundamental_mbl.png')"><img src="assets/img/fundamental_mbl.png" alt="Android Fund Cert"></div>
+                <div class="cert-info">
+                    <h4>Belajar Fundamental Aplikasi Android</h4>
+                    <div class="cert-meta"><span>Bangkit</span><span>Nov 2023</span></div>
+                    <div class="cert-tags"><span>Android</span><span>Mobile</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/fundamental_mbl.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/intermediet_mbl.png')"><img src="assets/img/intermediet_mbl.png" alt="Android Int Cert"></div>
+                <div class="cert-info">
+                    <h4>Belajar Pengembangan Aplikasi Android Intermediate</h4>
+                    <div class="cert-meta"><span>Bangkit</span><span>Dec 2023</span></div>
+                    <div class="cert-tags"><span>Android</span><span>Intermediate</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/intermediet_mbl.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/ml_mbl.png')"><img src="assets/img/ml_mbl.png" alt="ML Cert"></div>
+                <div class="cert-info">
+                    <h4>Belajar Penerapan Machine Learning untuk Android</h4>
+                    <div class="cert-meta"><span>Bangkit</span><span>July 2023</span></div>
+                    <div class="cert-tags"><span>Machine Learning</span><span>Android</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/ml_mbl.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/aws.png')"><img src="assets/img/aws.png" alt="AWS Cert"></div>
+                <div class="cert-info">
+                    <h4>Belajar Dasar Cloud dan Gen AI di AWS</h4>
+                    <div class="cert-meta"><span>AWS</span><span>July 2023</span></div>
+                    <div class="cert-tags"><span>Cloud</span><span>Gen AI</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/aws.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/js.png')"><img src="assets/img/js.png" alt="JS Cert"></div>
+                <div class="cert-info">
+                    <h4>Belajar Dasar Pemrograman JavaScript</h4>
+                    <div class="cert-meta"><span>Dicoding</span><span>Sept 2023</span></div>
+                    <div class="cert-tags"><span>JavaScript</span><span>Frontend</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/js.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+            <div class="cert-card">
+                <div class="cert-img-box" onclick="openLightbox('assets/img/dasar_ai.png')"><img src="assets/img/dasar_ai.png" alt="AI Cert"></div>
+                <div class="cert-info">
+                    <h4>Belajar Dasar AI</h4>
+                    <div class="cert-meta"><span>Dicoding</span><span>Sept 2023</span></div>
+                    <div class="cert-tags"><span>AI</span><span>Fundamental</span></div>
+                    <button class="btn-view" onclick="openLightbox('assets/img/dasar_ai.png')"
+                        data-i18n="cert_btn_view">View Certificate</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+        <div class="section-title">
+            <h2 data-i18n="contact_title">Contact <span>Me</span></h2>
+            <p data-i18n="contact_subtitle">Get in touch via WhatsApp or email</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="info-box">
+                    <div class="info-icon"><i class='bx bx-map'></i></div>
+                    <div class="info-text">
+                        <h4 data-i18n="contact_addr_label">Address</h4>
+                        <p>Jalan A.H Nasution No. 105, Cipadung, Cibiru, Kota Bandung</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-icon"><i class='bx bx-envelope'></i></div>
+                    <div class="info-text">
+                        <h4 data-i18n="contact_email_label">Email</h4>
+                        <p>naf50951@gmail.com</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-icon"><i class='bx bx-phone'></i></div>
+                    <div class="info-text">
+                        <h4 data-i18n="contact_phone_label">Phone</h4>
+                        <p>+62 812-1442-4344</p>
+                    </div>
+                </div>
+                <div class="map-box">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.6729373981884!2d107.71458807584149!3d-6.929656767832863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c3258aa58189%3A0xd14df5a9a46a6774!2sUIN%20Sunan%20Gunung%20Djati%20Bandung!5e0!3m2!1sid!2sid!4v1703649234891!5m2!1sid!2sid"
+                        allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3 data-i18n="contact_form_title">Send Message</h3>
+                <form id="whatsappForm">
+                    <div class="input-group">
+                        <label data-i18n="contact_name_label">Your Name</label>
+                        <input type="text" id="name" class="input-field" placeholder="Enter your name"
+                            data-i18n-ph="contact_name_ph" required>
+                    </div>
+                    <div class="input-group">
+                        <label data-i18n="contact_phone_label">Your Contact Number</label>
+                        <input type="number" id="phone" class="input-field" placeholder="Enter your number"
+                            data-i18n-ph="contact_phone_ph" required>
+                    </div>
+                    <div class="input-group">
+                        <label data-i18n="contact_email_label">Your Email</label>
+                        <input type="email" id="email" class="input-field" placeholder="Enter your email"
+                            data-i18n-ph="contact_email_ph" required>
+                    </div>
+                    <div class="input-group">
+                        <label data-i18n="contact_msg_label">Message</label>
+                        <textarea id="message" class="input-field" placeholder="Write your message here..."
+                            data-i18n-ph="contact_msg_ph" required></textarea>
+                    </div>
+                    <button type="button" class="btn-send" onclick="gotowhatsapp()">
+                        <span data-i18n="contact_btn_send">Send to WhatsApp</span> <i class='bx bxl-whatsapp'></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 <span>Nazwa Hemalia Putri</span>. <span data-i18n="footer_rights">All rights reserved.</span></p>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img id="lightbox-img" src="" alt="Certificate Full">
+    </div>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class='bx bx-chevron-up'></i>
+    </button>
+
+    <!-- ScrollReveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <script>
+        // =========================================
+        // 1. THREE.JS — 3D DATA NETWORK BACKGROUND
+        // =========================================
+        (function initThreeBackground() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas || typeof THREE === 'undefined') return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 50;
+
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // --- Config based on theme ---
+            function getThemeColors() {
+                const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+                return {
+                    nodeColor: isDark ? 0x00d4ff : 0x0ea5e9,
+                    lineColor: isDark ? 0x00d4ff : 0x0ea5e9,
+                    nodeOpacity: isDark ? 0.7 : 0.4,
+                    lineOpacity: isDark ? 0.12 : 0.08,
+                    particleColor: isDark ? 0x7c3aed : 0x6d28d9,
+                    particleOpacity: isDark ? 0.5 : 0.3,
+                };
+            }
+
+            // --- Create Node Network ---
+            const NODE_COUNT = 80;
+            const FIELD_SIZE = 60;
+            const CONNECTION_DISTANCE = 18;
+
+            const nodePositions = [];
+            const nodeVelocities = [];
+
+            for (let i = 0; i < NODE_COUNT; i++) {
+                nodePositions.push(
+                    (Math.random() - 0.5) * FIELD_SIZE,
+                    (Math.random() - 0.5) * FIELD_SIZE,
+                    (Math.random() - 0.5) * FIELD_SIZE * 0.5
+                );
+                nodeVelocities.push(
+                    (Math.random() - 0.5) * 0.015,
+                    (Math.random() - 0.5) * 0.015,
+                    (Math.random() - 0.5) * 0.008
+                );
+            }
+
+            // Node points
+            const nodeGeometry = new THREE.BufferGeometry();
+            nodeGeometry.setAttribute('position', new THREE.Float32BufferAttribute(nodePositions, 3));
+
+            const colors = getThemeColors();
+
+            const nodeMaterial = new THREE.PointsMaterial({
+                color: colors.nodeColor,
+                size: 0.6,
+                transparent: true,
+                opacity: colors.nodeOpacity,
+                sizeAttenuation: true,
+            });
+
+            const nodes = new THREE.Points(nodeGeometry, nodeMaterial);
+            scene.add(nodes);
+
+            // Connection lines
+            const lineGeometry = new THREE.BufferGeometry();
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: colors.lineColor,
+                transparent: true,
+                opacity: colors.lineOpacity,
+            });
+            const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            scene.add(lines);
+
+            // Floating geometric shapes (data points)
+            const shapesGroup = new THREE.Group();
+            scene.add(shapesGroup);
+
+            const shapeGeometries = [
+                new THREE.OctahedronGeometry(0.4, 0),
+                new THREE.TetrahedronGeometry(0.35, 0),
+                new THREE.IcosahedronGeometry(0.3, 0),
+            ];
+
+            const shapeData = [];
+            for (let i = 0; i < 20; i++) {
+                const geo = shapeGeometries[Math.floor(Math.random() * shapeGeometries.length)];
+                const mat = new THREE.MeshBasicMaterial({
+                    color: colors.particleColor,
+                    transparent: true,
+                    opacity: colors.particleOpacity,
+                    wireframe: true,
+                });
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.position.set(
+                    (Math.random() - 0.5) * FIELD_SIZE,
+                    (Math.random() - 0.5) * FIELD_SIZE,
+                    (Math.random() - 0.5) * 20
+                );
+                mesh.rotation.set(
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI,
+                    Math.random() * Math.PI
+                );
+                shapesGroup.add(mesh);
+                shapeData.push({
+                    mesh,
+                    rotSpeed: {
+                        x: (Math.random() - 0.5) * 0.01,
+                        y: (Math.random() - 0.5) * 0.01,
+                        z: (Math.random() - 0.5) * 0.005,
+                    },
+                    floatSpeed: (Math.random() - 0.5) * 0.02,
+                    floatOffset: Math.random() * Math.PI * 2,
+                });
+            }
+
+            // Mouse tracking
+            const mouse = { x: 0, y: 0 };
+            document.addEventListener('mousemove', (e) => {
+                mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
+            });
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const positions = nodeGeometry.attributes.position.array;
+
+                // Move nodes
+                for (let i = 0; i < NODE_COUNT; i++) {
+                    const idx = i * 3;
+                    positions[idx] += nodeVelocities[idx];
+                    positions[idx + 1] += nodeVelocities[idx + 1];
+                    positions[idx + 2] += nodeVelocities[idx + 2];
+
+                    // Bounce within bounds
+                    for (let d = 0; d < 3; d++) {
+                        const limit = d === 2 ? FIELD_SIZE * 0.25 : FIELD_SIZE * 0.5;
+                        if (Math.abs(positions[idx + d]) > limit) {
+                            nodeVelocities[idx + d] *= -1;
+                        }
+                    }
+                }
+                nodeGeometry.attributes.position.needsUpdate = true;
+
+                // Update connections
+                const linePositions = [];
+                for (let i = 0; i < NODE_COUNT; i++) {
+                    for (let j = i + 1; j < NODE_COUNT; j++) {
+                        const dx = positions[i * 3] - positions[j * 3];
+                        const dy = positions[i * 3 + 1] - positions[j * 3 + 1];
+                        const dz = positions[i * 3 + 2] - positions[j * 3 + 2];
+                        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                        if (dist < CONNECTION_DISTANCE) {
+                            linePositions.push(
+                                positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2],
+                                positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]
+                            );
+                        }
+                    }
+                }
+                lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+
+                // Rotate & float shapes
+                const time = Date.now() * 0.001;
+                shapeData.forEach(s => {
+                    s.mesh.rotation.x += s.rotSpeed.x;
+                    s.mesh.rotation.y += s.rotSpeed.y;
+                    s.mesh.rotation.z += s.rotSpeed.z;
+                    s.mesh.position.y += Math.sin(time + s.floatOffset) * 0.003;
+                });
+
+                // Camera follows mouse gently
+                camera.position.x += (mouse.x * 5 - camera.position.x) * 0.02;
+                camera.position.y += (mouse.y * 3 - camera.position.y) * 0.02;
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Resize handler
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // Expose update function for theme switching
+            window.updateThreeColors = function () {
+                const c = getThemeColors();
+                nodeMaterial.color.setHex(c.nodeColor);
+                nodeMaterial.opacity = c.nodeOpacity;
+                lineMaterial.color.setHex(c.lineColor);
+                lineMaterial.opacity = c.lineOpacity;
+                shapeData.forEach(s => {
+                    s.mesh.material.color.setHex(c.particleColor);
+                    s.mesh.material.opacity = c.particleOpacity;
+                });
+            };
+        })();
+
+        // =========================================
+        // 2. THEME TOGGLE
+        // =========================================
+        (function initThemeToggle() {
+            const html = document.documentElement;
+            const toggle = document.getElementById('themeToggle');
+            const saved = localStorage.getItem('portfolio-theme');
+
+            if (saved) {
+                html.setAttribute('data-theme', saved);
+            }
+
+            if (toggle) {
+                toggle.addEventListener('click', () => {
+                    const current = html.getAttribute('data-theme');
+                    const next = current === 'dark' ? 'light' : 'dark';
+                    html.setAttribute('data-theme', next);
+                    localStorage.setItem('portfolio-theme', next);
+                    if (window.updateThreeColors) window.updateThreeColors();
+                });
+            }
+        })();
+
+        // =========================================
+        // 3. TYPING ANIMATION
+        // =========================================
+        (function initTypingAnimation() {
+            const roles = ['Data Analyst', 'Software Developer', 'Mobile Developer', 'Data Scientist'];
+            const el = document.getElementById('typed-role');
+            if (!el) return;
+
+            let roleIdx = 0, charIdx = 0, isDeleting = false;
+
+            function typeStep() {
+                const currentRole = roles[roleIdx];
+
+                if (!isDeleting) {
+                    el.textContent = currentRole.substring(0, charIdx + 1);
+                    charIdx++;
+                    if (charIdx === currentRole.length) {
+                        isDeleting = true;
+                        setTimeout(typeStep, 2000);
+                        return;
+                    }
+                    setTimeout(typeStep, 80);
+                } else {
+                    el.textContent = currentRole.substring(0, charIdx - 1);
+                    charIdx--;
+                    if (charIdx === 0) {
+                        isDeleting = false;
+                        roleIdx = (roleIdx + 1) % roles.length;
+                        setTimeout(typeStep, 400);
+                        return;
+                    }
+                    setTimeout(typeStep, 40);
+                }
+            }
+
+            setTimeout(typeStep, 1500);
+        })();
+
+        // =========================================
+        // 4. SCROLL REVEAL
+        // =========================================
+        ScrollReveal({
+            reset: false,
+            distance: '60px',
+            duration: 1600,
+            delay: 200,
+            easing: 'cubic-bezier(0.5, 0, 0, 1)',
+        });
+
+        ScrollReveal().reveal('.home-content, .section-title', { origin: 'top' });
+        ScrollReveal().reveal('.hero-img-wrapper, .skills-grid, .portfolio-container, .certificate-container, .contact-form', { origin: 'bottom' });
+        ScrollReveal().reveal('.about-img-card, .exp-card', { origin: 'left' });
+        ScrollReveal().reveal('.about-right, .contact-info', { origin: 'right' });
+
+        // =========================================
+        // 5. SCROLLSPY & NAVIGATION
+        // =========================================
+        const allSections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('header ul li a');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+
+            // Active link
+            allSections.forEach(sec => {
+                const top = sec.offsetTop - 160;
+                const height = sec.offsetHeight;
+                const id = sec.getAttribute('id');
+                if (scrollY >= top && scrollY < top + height) {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    const activeLink = document.querySelector('header ul li a[href*=' + id + ']');
+                    if (activeLink) activeLink.classList.add('active');
+                }
+            });
+
+            // Back to top visibility
+            if (backToTopBtn) {
+                backToTopBtn.classList.toggle('visible', scrollY > 500);
+            }
+
+            // Close mobile menu on scroll
+            const menu = document.getElementById('nav-menu');
+            const toggleBtn = document.querySelector('.menu-toggle i');
+            if (menu && toggleBtn) {
+                menu.classList.remove('show');
+                toggleBtn.classList.replace('bx-x', 'bx-menu');
+            }
+        });
+
+        // =========================================
+        // 6. HAMBURGER MENU
+        // =========================================
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            const toggleBtn = document.querySelector('.menu-toggle i');
+            menu.classList.toggle('show');
+            if (menu.classList.contains('show')) {
+                toggleBtn.classList.replace('bx-menu', 'bx-x');
+            } else {
+                toggleBtn.classList.replace('bx-x', 'bx-menu');
+            }
+        }
+
+        // =========================================
+        // 6b. EXPERIENCE ACCORDION
+        // =========================================
+        function toggleExp(card) {
+            const isOpen = card.classList.contains('open');
+            // close all
+            document.querySelectorAll('.exp-card.open').forEach(c => c.classList.remove('open'));
+            // open clicked if it wasn't already open
+            if (!isOpen) card.classList.add('open');
+        }
+
+        // =========================================
+        // 7. PROJECT FILTER
+        // =========================================
+        function filterProjects(category) {
+            const items = document.querySelectorAll('.portfolio-item');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => {
+                const btnAttr = btn.getAttribute('onclick') || '';
+                const isActive = btnAttr.includes(`'${category}'`);
+                btn.classList.toggle('active-filter', isActive);
+            });
+
+            items.forEach(item => {
+                if (category === 'all') {
+                    item.classList.remove('hide');
+                } else {
+                    item.classList.toggle('hide', !item.classList.contains(category));
+                }
+            });
+        }
+
+        // =========================================
+        // 8. LIGHTBOX
+        // =========================================
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // =========================================
+        // 9. INTRO OVERLAY
+        // =========================================
+        (function initIntro() {
+            const overlay = document.querySelector('.intro-overlay');
+            const textEl = document.getElementById('intro-text');
+            if (!overlay || !textEl) return;
+
+            const introRoles = ['Data Analyst', 'Software Developer', 'Mobile Developer'];
+            let skipped = false;
+
+            const closeIntro = () => {
+                if (skipped) return;
+                skipped = true;
+                overlay.classList.add('hidden');
+                document.body.classList.remove('intro-active');
+                setTimeout(() => { if (overlay.parentNode) overlay.remove(); }, 800);
+            };
+
+            overlay.addEventListener('click', closeIntro);
+
+            (async () => {
+                if (skipped) return;
+                textEl.textContent = '•';
+                textEl.classList.add('show');
+                await new Promise(r => setTimeout(r, 400));
+                textEl.classList.remove('show');
+                await new Promise(r => setTimeout(r, 150));
+
+                for (let i = 0; i < introRoles.length; i++) {
+                    if (skipped) return;
+                    textEl.textContent = introRoles[i];
+                    textEl.classList.add('show');
+                    await new Promise(r => setTimeout(r, 400));
+                    textEl.classList.remove('show');
+                    await new Promise(r => setTimeout(r, 100));
+                }
+
+                if (!skipped) closeIntro();
+            })();
+        })();
+
+        // =========================================
+        // 10. WHATSAPP FORM
+        // =========================================
+        function gotowhatsapp() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !phone || !email || !message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const text =
+                '*New Message from Portfolio Website* %0a%0a' +
+                '👤 *Name:* ' + encodeURIComponent(name) + '%0a' +
+                '📱 *Phone:* ' + encodeURIComponent(phone) + '%0a' +
+                '📧 *Email:* ' + encodeURIComponent(email) + '%0a' +
+                '📝 *Message:* %0a' + encodeURIComponent(message);
+
+            window.open('https://wa.me/6281214424344?text=' + text, '_blank').focus();
+        }
+
+        // =========================================
+        // 11. LANGUAGE SWITCHER (EN / ID)
+        // =========================================
+        (function initLanguageSwitcher() {
+            const translations = {
+                en: {
+                    nav_home: "Home",
+                    nav_about: "About",
+                    nav_experience: "Experience",
+                    nav_project: "Projects",
+                    nav_certificates: "Certificates",
+                    nav_contact: "Contact",
+                    home_tag: "Open to Opportunities",
+                    home_greeting: "Hello, I'm",
+                    home_bio: "Fresh graduate from Informatics Engineering at UIN SGD with a strong passion for IT, data analysis, and digital solutions. I thrive in collaborative team settings and adapt quickly to new challenges.",
+                    home_btn_projects: "View Projects",
+                    home_btn_cv: "Download CV",
+                    home_btn_hire: "Hire Me",
+                    about_title: 'About <span>Me</span>',
+                    about_subtitle: "Get to know me a little better",
+                    about_role: "Informatics Engineering Graduate",
+                    about_btn_cv: "Download CV",
+                    about_desc: "A passionate Computer Engineering — IT student at UIN Bandung with a strong drive for technology and innovation. Originally from Garut, now exploring the tech world in Bandung. I am fascinated by the Internet of Things (IoT) and always eager to learn new things.",
+                    about_tech_title: "Tech Enthusiast",
+                    about_tech_desc: "Exploring new technologies & coding.",
+                    about_lead_title: "Leadership",
+                    about_lead_desc: "Active in organizations & teamwork.",
+                    about_skills_title: 'My <span>Skills</span>',
+                    about_achievements_title: 'Achievements & <span>Publications</span>',
+                    achieve_grp_comp: 'International Competitions',
+                    achieve_grp_pub: 'Scientific Publications',
+                    achieve_grp_thesis: 'Undergraduate Thesis & Scientific Paper',
+                    achieve_link_rg: 'View on ResearchGate',
+                    achieve_link_digilib: 'View on Digital Library UIN SGD',
+                    exp_title: 'Work <span>Experience</span>',
+                    exp_subtitle: "My professional journey and organizational roles",
+                    proj_title: 'My <span>Projects</span>',
+                    proj_subtitle: "Here are some of the projects I've worked on",
+                    filter_all: "All",
+                    filter_web: "Web",
+                    filter_android: "Android",
+                    filter_dashboard: "Data Analyst / Data Scientist",
+                    cert_title: 'My <span>Certificates</span>',
+                    cert_subtitle: "Achievements & Professional Development",
+                    cert_btn_view: "View Certificate",
+                    contact_title: 'Contact <span>Me</span>',
+                    contact_subtitle: "Get in touch via WhatsApp or email",
+                    contact_addr_label: "Address",
+                    contact_email_label: "Email",
+                    contact_phone_label: "Phone",
+                    contact_form_title: "Send Message",
+                    contact_name_label: "Your Name",
+                    contact_name_ph: "Enter your name",
+                    contact_phone_label: "Your Contact Number",
+                    contact_phone_ph: "Enter your number",
+                    contact_email_label: "Your Email",
+                    contact_email_ph: "Enter your email",
+                    contact_msg_label: "Message",
+                    contact_msg_ph: "Write your message here...",
+                    contact_btn_send: "Send to WhatsApp",
+                    footer_rights: "All rights reserved.",
+                },
+                id: {
+                    nav_home: "Beranda",
+                    nav_about: "Tentang",
+                    nav_experience: "Pengalaman",
+                    nav_project: "Proyek",
+                    nav_certificates: "Sertifikat",
+                    nav_contact: "Kontak",
+                    home_tag: "Terbuka untuk Peluang Kerja",
+                    home_greeting: "Halo, Saya",
+                    home_bio: "Lulusan baru Teknik Informatika UIN Sunan Gunung Djati Bandung dengan passion kuat di bidang IT, analisis data, dan solusi digital. Berpengalaman dalam kerja tim dan cepat beradaptasi dengan tantangan baru.",
+                    home_btn_projects: "Lihat Proyek",
+                    home_btn_cv: "Unduh CV",
+                    home_btn_hire: "Hubungi Saya",
+                    about_title: 'Tentang <span>Saya</span>',
+                    about_subtitle: "Mengenal saya lebih dekat",
+                    about_role: "Lulusan Teknik Informatika",
+                    about_btn_cv: "Unduh CV",
+                    about_desc: "Lulusan Teknik Informatika UIN Bandung yang berdedikasi tinggi terhadap perkembangan teknologi dan inovasi. Berasal dari Garut dan saat ini menjelajahi dunia IT di Bandung. Memiliki ketertarikan pada Data Analytics, Software Development, dan selalu bersemangat mempelajari hal-hal baru.",
+                    about_tech_title: "Antusias Teknologi",
+                    about_tech_desc: "Eksplorasi teknologi baru & pemrograman.",
+                    about_lead_title: "Kepemimpinan",
+                    about_lead_desc: "Aktif berorganisasi & kerja tim.",
+                    about_skills_title: 'Keahlian <span>Saya</span>',
+                    about_achievements_title: 'Prestasi & <span>Publikasi</span>',
+                    achieve_grp_comp: 'Kompetisi Internasional',
+                    achieve_grp_pub: 'Publikasi Ilmiah',
+                    achieve_grp_thesis: 'Karya Tulis Ilmiah (Skripsi)',
+                    achieve_link_rg: 'Lihat di ResearchGate',
+                    achieve_link_digilib: 'Lihat di Digital Library UIN SGD',
+                    exp_title: 'Pengalaman <span>Kerja</span>',
+                    exp_subtitle: "Perjalanan profesional dan peran organisasi saya",
+                    proj_title: 'Proyek <span>Saya</span>',
+                    proj_subtitle: "Beberapa proyek yang telah saya kerjakan",
+                    filter_all: "Semua",
+                    filter_web: "Web",
+                    filter_android: "Android",
+                    filter_dashboard: "Data Analyst / Data Scientist",
+                    cert_title: 'Sertifikat <span>Saya</span>',
+                    cert_subtitle: "Pencapaian & Pengembangan Profesional",
+                    cert_btn_view: "Lihat Sertifikat",
+                    contact_title: 'Hubungi <span>Saya</span>',
+                    contact_subtitle: "Hubungi saya melalui WhatsApp atau email",
+                    contact_addr_label: "Alamat",
+                    contact_email_label: "Email",
+                    contact_phone_label: "Telepon",
+                    contact_form_title: "Kirim Pesan",
+                    contact_name_label: "Nama Anda",
+                    contact_name_ph: "Masukkan nama Anda",
+                    contact_phone_label: "Nomor Telepon/WA",
+                    contact_phone_ph: "Masukkan nomor Anda",
+                    contact_email_label: "Email Anda",
+                    contact_email_ph: "Masukkan email Anda",
+                    contact_msg_label: "Pesan",
+                    contact_msg_ph: "Tulis pesan Anda di sini...",
+                    contact_btn_send: "Kirim ke WhatsApp",
+                    footer_rights: "Hak cipta dilindungi undang-undang.",
+                }
+            };
+
+            let currentLang = localStorage.getItem('portfolio-lang') || 'en';
+
+            function setLanguage(lang) {
+                currentLang = lang;
+                localStorage.setItem('portfolio-lang', lang);
+                document.documentElement.setAttribute('lang', lang);
+
+                // Update toggle button active state
+                document.querySelectorAll('[data-lang-btn]').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-lang-btn') === lang);
+                });
+
+                // Update text content & HTML
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (translations[lang] && translations[lang][key]) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+
+                // Update placeholders
+                document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-ph');
+                    if (translations[lang] && translations[lang][key]) {
+                        el.setAttribute('placeholder', translations[lang][key]);
+                    }
+                });
+            }
+
+            const langToggle = document.getElementById('langToggle');
+            if (langToggle) {
+                langToggle.addEventListener('click', () => {
+                    const nextLang = currentLang === 'en' ? 'id' : 'en';
+                    setLanguage(nextLang);
+                });
+            }
+
+            setLanguage(currentLang);
+        })();
+    </script>
+</body>
+
+</html>

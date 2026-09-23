@@ -1,0 +1,250 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 50px;
+    background-color: #FFE4E1;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    min-height: calc(100vh - 280px);
+    min-height: 300px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+header {
+    position: relative;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    width: 100%;
+    z-index: 2;
+}
+
+header .logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+
+/* Navigasi */
+header ul {
+    display: flex;
+    list-style: none;
+    transition: 0.3s ease-in-out;
+}
+
+header ul li {
+    margin-left: 20px;
+}
+
+header ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+header ul li a:hover,
+header ul li a.active {
+    background-color: #FFB6C1; /* Pink soft */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Menu Toggle (Hamburger) */
+.menu-toggle {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+}
+
+/* Responsif untuk layar kecil */
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    header ul {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        display: none;
+    }
+
+    header ul.show {
+        display: flex;
+    }
+
+    header ul li {
+        text-align: center;
+        margin: 10px 0;
+    }
+}
+
+.content {
+    max-width: 700px;
+    width: 100%;
+    /* box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 20px; */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 40px;
+     text-align: justify;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1;
+}
+
+.content h2 {
+    padding-bottom: 10px;
+    font-size: 2em;
+    color: #333;
+}
+
+.content p {
+    font-size: 1em;
+    color: #333;
+}
+
+.content a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    margin-top: 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 1em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content a:hover {
+    background-color: #666;
+}
+
+.imgBox {
+    flex: 1;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.imgBox img {
+    width: 100%;
+    max-width: 500px;
+    animation: animate 5s linear infinite;
+}
+
+.icon {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.icon li {
+    list-style: none;
+}
+
+.icon li a {
+    text-decoration: none;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin: 5px 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.icon li a img {
+    width: 25px;
+    transform: scale(0.7);
+    transition: 0.55s;
+}
+
+.icon li:hover a img {
+    transform: scale(0.7) rotate(300deg);
+}
+
+@media screen and (max-width: 768px) {
+    header .logo {
+        font-size: 1.5em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .container {
+        flex-direction: column-reverse;
+    }
+    header ul {
+        width: 100%;
+        justify-content: center;
+    }
+    .content {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-top: 0;
+    }
+    .imgBox {
+        margin-left: 20px;
+        margin-top: 20px;
+        order: 0;
+    }
+    .icon {
+        flex-direction: row;
+        right: 0;
+        bottom: auto;
+        top: 20px;
+    }
+    .icon li a {
+        width: 40px;
+        height: 40px;
+    }
+    .icon li a img {
+        width: 20px;
+    }
+}

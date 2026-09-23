@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">Detail Project — Nazwa Hemalia Putri</title>
+    <meta id="meta-desc" name="description"
+        content="Detail studi kasus dan visualisasi dashboard analitik data oleh Nazwa Hemalia Putri." />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link href="assets/img/icon.png" rel="icon">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="assets/css/project-detail.css">
+
+    <!-- Three.js for Animated Background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body>
+    <!-- Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="detail-navbar">
+        <a href="index.html" class="nav-brand">Nazwa<span>.</span></a>
+
+        <div class="nav-actions">
+            <a href="index.html#project" class="btn-nav-back" id="btn-back-nav">
+                <i class='bx bx-arrow-back'></i> <span id="txt-back-nav">Kembali ke Project</span>
+            </a>
+            <button class="lang-toggle-btn" id="langToggleBtn" title="Ganti Bahasa">EN</button>
+            <button class="theme-toggle-btn" id="themeToggleBtn" title="Ganti Tema">
+                <i class='bx bx-sun' id="themeIcon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="detail-main-wrapper" id="detail-root">
+        <!-- Rendered by JavaScript -->
+    </main>
+
+    <!-- Gallery Lightbox Modal -->
+    <div class="gallery-modal-overlay" id="galleryModal" onclick="closeGalleryModal()">
+        <div class="modal-content-container" onclick="event.stopPropagation()">
+            <button class="modal-btn-close" onclick="closeGalleryModal()" aria-label="Close">
+                <i class='bx bx-x'></i>
+            </button>
+            <button class="modal-nav-arrow modal-nav-prev" onclick="navigateGallery(-1)" aria-label="Previous">
+                <i class='bx bx-chevron-left'></i>
+            </button>
+            <img src="" alt="Project Preview" id="modalMainImg" class="modal-main-image">
+            <button class="modal-nav-arrow modal-nav-next" onclick="navigateGallery(1)" aria-label="Next">
+                <i class='bx bx-chevron-right'></i>
+            </button>
+            <div class="modal-counter-tag" id="modalCounterTag">1 / 1</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="detail-footer">
+        <p>© 2026 Nazwa Hemalia Putri. All rights reserved.</p>
+    </footer>
+
+    <!-- Load Project Dataset -->
+    <script src="assets/js/projects-data.js"></script>
+
+    <!-- Detail Controller Script -->
+    <script>
+        // =========================================
+        // 1. STATE & LANGUAGE HANDLING
+        // =========================================
+        let currentLang = localStorage.getItem('portfolio-lang') || 'id';
+        let currentTheme = localStorage.getItem('portfolio-theme') || 'dark';
+        let currentGallery = [];
+        let currentGalleryIndex = 0;
+
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        document.documentElement.setAttribute('lang', currentLang);
+
+        const themeIcon = document.getElementById('themeIcon');
+        if (themeIcon) {
+            themeIcon.className = currentTheme === 'dark' ? 'bx bx-sun' : 'bx bx-moon';
+        }
+
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        if (langToggleBtn) {
+            langToggleBtn.textContent = currentLang === 'id' ? 'EN' : 'ID';
+            langToggleBtn.addEventListener('click', () => {
+                currentLang = currentLang === 'id' ? 'en' : 'id';
+                localStorage.setItem('portfolio-lang', currentLang);
+                document.documentElement.setAttribute('lang', currentLang);
+                langToggleBtn.textContent = currentLang === 'id' ? 'EN' : 'ID';
+                renderProjectDetail();
+            });
+        }
+
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                localStorage.setItem('portfolio-theme', currentTheme);
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                themeIcon.className = currentTheme === 'dark' ? 'bx bx-sun' : 'bx bx-moon';
+            });
+        }
+
+        // =========================================
+        // 2. GET PROJECT ID FROM URL
+        // =========================================
+        function getProjectId() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
+        }
+
+        // =========================================
+        // 3. RENDER PROJECT DETAIL
+        // =========================================
+        function renderProjectDetail() {
+            const root = document.getElementById('detail-root');
+            const projectId = getProjectId();
+            const isId = currentLang === 'id';
+
+            // Update navbar back text
+            const txtBack = document.getElementById('txt-back-nav');
+            if (txtBack) {
+                txtBack.textContent = isId ? 'Kembali ke Project' : 'Back to Projects';
+            }
+
+            if (!PORTFOLIO_DATA || !PORTFOLIO_DATA.projects) {
+                root.innerHTML = `
+                    <div class="glass detail-error-box">
+                        <i class='bx bx-error-circle'></i>
+                        <h2>${isId ? 'Data Project Tidak Ditemukan' : 'Project Data Not Found'}</h2>
+                        <p>${isId ? 'Gagal memuat dataset project portofolio.' : 'Failed to load portfolio project dataset.'}</p>
+                        <a href="index.html#project" class="action-link-btn primary" style="max-width:240px;margin:0 auto;">
+                            <i class='bx bx-arrow-back'></i> ${isId ? 'Kembali ke Project' : 'Back to Projects'}
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            const project = PORTFOLIO_DATA.projects.find(p => p.id === projectId);
+
+            if (!project) {
+                root.innerHTML = `
+                    <div class="glass detail-error-box">
+                        <i class='bx bx-search-alt'></i>
+                        <h2>${isId ? 'Project Tidak Ditemukan' : 'Project Not Found'}</h2>
+                        <p>${isId ? 'Project dengan ID "' + (projectId || 'kosong') + '" tidak ditemukan.' : 'Project with ID "' + (projectId || 'empty') + '" could not be found.'}</p>
+                        <a href="index.html#project" class="action-link-btn primary" style="max-width:240px;margin:0 auto;">
+                            <i class='bx bx-arrow-back'></i> ${isId ? 'Lihat Semua Project' : 'View All Projects'}
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            // Update title tag
+            const name = isId ? project.name : (project.name_en || project.name);
+            document.title = `${name} — Nazwa Hemalia Putri`;
+
+            const status = isId ? project.status : (project.status_en || project.status);
+            const desc = isId ? project.desc : (project.desc_en || project.desc);
+            const d = project.detail || {};
+            const summary = isId ? d.summary : (d.summary_en || d.summary);
+            const background = isId ? d.background : (d.background_en || d.background);
+            const problem = isId ? d.problem : (d.problem_en || d.problem);
+            const goal = isId ? d.goal : (d.goal_en || d.goal);
+            const workflow = isId ? (d.workflow || []) : (d.workflow_en || d.workflow || []);
+            const features = isId ? (d.features || []) : (d.features_en || d.features || []);
+            const challenges = isId ? d.challenges : (d.challenges_en || d.challenges);
+            const solution = isId ? d.solution : (d.solution_en || d.solution);
+            const role = isId ? d.role : (d.role_en || d.role);
+            const results = isId ? d.results : (d.results_en || d.results);
+            const insight = isId ? d.insight : (d.insight_en || d.insight);
+            const gallery = d.gallery || [project.thumbnail];
+
+            currentGallery = gallery;
+
+            root.innerHTML = `
+                <!-- Top Hero Card -->
+                <div class="glass detail-hero-card">
+                    <div class="detail-meta-row">
+                        <span class="project-category">${project.category}</span>
+                        <span class="project-status"><i class='bx bx-check-circle'></i> ${status}</span>
+                        <span class="project-date"><i class='bx bx-calendar'></i> ${project.date}</span>
+                    </div>
+                    <h1 class="detail-title">${name}</h1>
+                    ${project.company ? `<div class="detail-company"><i class='bx bx-buildings'></i> ${project.company}</div>` : ''}
+                    <p class="detail-desc">${desc}</p>
+                    <div class="detail-tech-chips">
+                        ${project.technologies.map(t => `<span class="tag">${t}</span>`).join('')}
+                    </div>
+                </div>
+
+                <!-- Main Showcase Thumbnail -->
+                <div class="detail-showcase-box" onclick="openGalleryModal(0)">
+                    <img src="${project.thumbnail}" alt="${name}" class="detail-showcase-img" onerror="this.src='dashbaord-projek/garudafood-executive-dashboard.jpg'">
+                    <div class="showcase-overlay-hint">
+                        <i class='bx bx-zoom-in'></i> ${isId ? 'Klik untuk memperbesar' : 'Click to enlarge'}
+                    </div>
+                </div>
+
+                <!-- Two-Column Grid Layout -->
+                <div class="detail-grid-layout">
+                    <!-- Left Column: Detailed Case Study Content -->
+                    <div class="detail-content-column">
+                        <!-- Summary -->
+                        <div class="glass detail-section-card">
+                            <h2><i class='bx bx-file'></i> ${isId ? 'Ringkasan Project' : 'Project Summary'}</h2>
+                            <p>${summary}</p>
+                        </div>
+
+                        <!-- Background, Problem & Goal -->
+                        <div class="glass detail-section-card">
+                            <h2><i class='bx bx-target-lock'></i> ${isId ? 'Latar Belakang & Tujuan' : 'Background & Objectives'}</h2>
+                            <p><strong>${isId ? 'Latar Belakang:' : 'Background:'}</strong> ${background}</p>
+                            <p><strong>${isId ? 'Rumusan Masalah:' : 'Problem Statement:'}</strong> ${problem}</p>
+                            <p><strong>${isId ? 'Tujuan Analitik:' : 'Goal & Objective:'}</strong> ${goal}</p>
+                        </div>
+
+                        <!-- Workflow Methodology -->
+                        ${workflow.length > 0 ? `
+                        <div class="glass detail-section-card">
+                            <h2><i class='bx bx-git-repo-forked'></i> ${isId ? 'Alur Kerja & Metodologi' : 'Workflow & Methodology'}</h2>
+                            <ul class="workflow-step-list">
+                                ${workflow.map((step, idx) => `
+                                    <li class="workflow-step-item">
+                                        <span class="step-badge">STEP ${String(idx + 1).padStart(2, '0')}</span>
+                                        <span>${step}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        ` : ''}
+
+                        <!-- Key Features -->
+                        ${features.length > 0 ? `
+                        <div class="glass detail-section-card">
+                            <h2><i class='bx bx-star'></i> ${isId ? 'Fitur & Kemampuan Dashboard' : 'Key Dashboard Features'}</h2>
+                            <ul class="features-grid-list">
+                                ${features.map(f => `
+                                    <li class="feature-grid-item">
+                                        <i class='bx bx-check-shield'></i>
+                                        <span>${f}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        ` : ''}
+
+                        <!-- Challenges & Solution -->
+                        <div class="glass detail-section-card">
+                            <h2><i class='bx bx-bulb'></i> ${isId ? 'Tantangan & Solusi Teknis' : 'Challenges & Technical Solutions'}</h2>
+                            <p><strong>${isId ? 'Tantangan:' : 'Challenges:'}</strong> ${challenges}</p>
+                            <p><strong>${isId ? 'Solusi:' : 'Solution:'}</strong> ${solution}</p>
+                        </div>
+
+                        <!-- Role, Results & Impact -->
+                        <div class="glass detail-section-card">
+                            <h2><i class='bx bx-trophy'></i> ${isId ? 'Peran & Dampak Bisnis' : 'Role & Business Impact'}</h2>
+                            <p><strong>${isId ? 'Peran Kerja:' : 'Role:'}</strong> ${role}</p>
+                            <p><strong>${isId ? 'Hasil & Dampak Kuantitatif:' : 'Results & Impact:'}</strong> ${results}</p>
+                            <p><strong>${isId ? 'Insight Bisnis:' : 'Business Insights:'}</strong> ${insight}</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Sidebar -->
+                    <div class="detail-sidebar-column">
+                        <!-- Quick Info Card -->
+                        <div class="glass sidebar-card">
+                            <h3><i class='bx bx-info-circle'></i> ${isId ? 'Informasi Cepat' : 'Quick Info'}</h3>
+                            <div class="quick-info-row">
+                                <span class="quick-info-label">${isId ? 'Kategori' : 'Category'}</span>
+                                <span class="quick-info-value">${project.category}</span>
+                            </div>
+                            ${project.company ? `
+                            <div class="quick-info-row">
+                                <span class="quick-info-label">${isId ? 'Perusahaan' : 'Company'}</span>
+                                <span class="quick-info-value">${project.company.split('(')[0].trim()}</span>
+                            </div>
+                            ` : ''}
+                            <div class="quick-info-row">
+                                <span class="quick-info-label">${isId ? 'Status' : 'Status'}</span>
+                                <span class="quick-info-value">${status}</span>
+                            </div>
+                            <div class="quick-info-row">
+                                <span class="quick-info-label">${isId ? 'Waktu Pengerjaan' : 'Timeline'}</span>
+                                <span class="quick-info-value">${project.date}</span>
+                            </div>
+                            <div class="quick-info-row">
+                                <span class="quick-info-label">${isId ? 'Total Tools' : 'Tools Count'}</span>
+                                <span class="quick-info-value">${project.technologies.length} Stack</span>
+                            </div>
+                        </div>
+
+                        <!-- Actions & Links -->
+                        <div class="glass sidebar-card">
+                            <h3><i class='bx bx-link-external'></i> ${isId ? 'Aksi & Tautan' : 'Actions & Links'}</h3>
+                            ${project.links && project.links.demo ? `
+                                <a href="${project.links.demo}" target="_blank" class="action-link-btn primary">
+                                    <i class='bx bx-play'></i> ${isId ? 'Buka Demo Live' : 'Open Live Demo'}
+                                </a>
+                            ` : ''}
+                            ${project.links && project.links.github ? `
+                                <a href="${project.links.github}" target="_blank" class="action-link-btn secondary">
+                                    <i class='bx bxl-github'></i> ${isId ? 'Lihat di GitHub' : 'View on GitHub'}
+                                </a>
+                            ` : ''}
+                            <a href="index.html#project" class="action-link-btn secondary">
+                                <i class='bx bx-grid-alt'></i> ${isId ? 'Lihat Project Lainnya' : 'Browse All Projects'}
+                            </a>
+                        </div>
+
+                        <!-- Gallery Thumbnails -->
+                        ${gallery.length > 0 ? `
+                        <div class="glass sidebar-card">
+                            <h3><i class='bx bx-images'></i> ${isId ? 'Tangkapan Layar Dashboard' : 'Dashboard Screenshots'}</h3>
+                            <div class="sidebar-gallery-track">
+                                ${gallery.map((img, idx) => `
+                                    <div class="gallery-thumbnail-item" onclick="openGalleryModal(${idx})">
+                                        <img src="${img}" alt="${name} screen ${idx + 1}" loading="lazy">
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;display:flex;align-items:center;gap:4px;">
+                                <i class='bx bx-expand'></i> ${isId ? 'Klik gambar untuk preview resolusi tinggi' : 'Click image for high-res preview'}
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // =========================================
+        // 4. LIGHTBOX / GALLERY MODAL
+        // =========================================
+        function openGalleryModal(index) {
+            if (!currentGallery || currentGallery.length === 0) return;
+            currentGalleryIndex = (index >= 0 && index < currentGallery.length) ? index : 0;
+            const modal = document.getElementById('galleryModal');
+            const img = document.getElementById('modalMainImg');
+            const counter = document.getElementById('modalCounterTag');
+
+            img.src = currentGallery[currentGalleryIndex];
+            counter.textContent = `${currentGalleryIndex + 1} / ${currentGallery.length}`;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGalleryModal() {
+            const modal = document.getElementById('galleryModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function navigateGallery(step) {
+            if (!currentGallery || currentGallery.length === 0) return;
+            currentGalleryIndex = (currentGalleryIndex + step + currentGallery.length) % currentGallery.length;
+            const img = document.getElementById('modalMainImg');
+            const counter = document.getElementById('modalCounterTag');
+            img.src = currentGallery[currentGalleryIndex];
+            counter.textContent = `${currentGalleryIndex + 1} / ${currentGallery.length}`;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('galleryModal');
+            if (modal && modal.classList.contains('active')) {
+                if (e.key === 'Escape') closeGalleryModal();
+                if (e.key === 'ArrowLeft') navigateGallery(-1);
+                if (e.key === 'ArrowRight') navigateGallery(1);
+            }
+        });
+
+        // =========================================
+        // 5. THREE.JS PARTICLE BACKGROUND
+        // =========================================
+        function initThreeBackground() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            const particlesCount = 700;
+            const posArray = new Float32Array(particlesCount * 3);
+
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 8;
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 0.015,
+                color: 0x00d4ff,
+                transparent: true,
+                opacity: 0.45,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particlesMesh = new THREE.Points(geometry, material);
+            scene.add(particlesMesh);
+            camera.position.z = 3;
+
+            let mouseX = 0, mouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) - 0.5;
+                mouseY = (e.clientY / window.innerHeight) - 0.5;
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                particlesMesh.rotation.y += 0.001;
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += mouseX * 0.01;
+                particlesMesh.rotation.x -= mouseY * 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // Initialize on DOM load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProjectDetail();
+            initThreeBackground();
+        });
+    </script>
+</body>
+
+</html>
